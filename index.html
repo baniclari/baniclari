@@ -6,12 +6,6 @@
 <!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-XFWW4P26Z9"></script>
 <script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'G-XFWW4P26Z9');
-</script>
 <title>BaniClari — Calculatoare financiare pentru oameni normali</title>
 <meta name="description" content="Calculatoare financiare gratuite: credit, dobânzi, inflație, economii, card de credit. Află cât plătești cu adevărat — fără jargon, fără cifre ascunse.">
 <meta name="keywords" content="calculator credit romania, calculator dobanda, calculator inflatie, calculator economii, cost credit, bani romania">
@@ -383,6 +377,59 @@ nav {
 }
 .result-item-lbl { font-size: 11px; color: var(--muted); }
 
+
+/* ── SCENARIOS ── */
+.scenario-strip {
+  background: var(--white);
+  border: 1.5px solid var(--border);
+  border-radius: 12px;
+  padding: 14px 18px;
+  margin-bottom: 16px;
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  cursor: pointer;
+  transition: border-color .15s, box-shadow .15s;
+}
+.scenario-strip:hover {
+  border-color: var(--blue);
+  box-shadow: 0 2px 12px rgba(45,91,227,.08);
+}
+.scenario-avatar {
+  font-size: 28px;
+  line-height: 1;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+.scenario-body { flex: 1; }
+.scenario-name {
+  font-family: 'Sora', sans-serif;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--ink);
+  margin-bottom: 2px;
+}
+.scenario-situation {
+  font-size: 12px;
+  color: var(--ink2);
+  line-height: 1.5;
+  margin-bottom: 6px;
+}
+.scenario-cta {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--blue);
+  letter-spacing: .03em;
+}
+.scenario-label {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--muted);
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  margin-bottom: 10px;
+}
+
 /* ── FOOTER ── */
 footer {
   max-width: 1000px;
@@ -419,20 +466,9 @@ footer {
   <span class="hero-eyebrow">Calculatoare financiare</span>
   <h1>Afla cat platesti<br><em>cu adevarat</em></h1>
   <p class="hero-sub">Calculatoare simple pentru decizii cu bani — credite, achizitii, investitii. Fara jargon, fara cifre ascunse. Rezultate pe intelesul oricui.</p>
-  <div class="hero-stat-row">
-    <div class="hero-stat">
-      <span class="hero-stat-num">5</span>
-      <span class="hero-stat-label">calculatoare</span>
-    </div>
-    <div class="hero-stat">
-      <span class="hero-stat-num">0 RON</span>
-      <span class="hero-stat-label">cost</span>
-    </div>
-    <div class="hero-stat">
-      <span class="hero-stat-num">~30 sec</span>
-      <span class="hero-stat-label">per calcul</span>
-    </div>
-  </div>
+</div>
+
+
 </div>
 
 <!-- CALCULATOARE -->
@@ -453,18 +489,28 @@ footer {
     <!-- PANEL 1 -->
     <div class="calc-panel" id="panel-credit">
       <div class="panel-title">Cat platesti total pentru un credit</div>
+
+      <div class="scenario-label">Exemplu real</div>
+      <div class="scenario-strip" onclick="event.stopPropagation();document.getElementById('c-suma').value='262500'; document.getElementById('c-dob').value='7.8'; document.getElementById('c-ani').value='25';">
+        <div class="scenario-avatar">🏠</div>
+        <div class="scenario-body">
+          <div class="scenario-name">Mihai, 34 ani — credit imobiliar</div>
+          <div class="scenario-situation">Vrea să cumpere un apartament de 350.000 RON. Cu un avans de 25% (87.500 RON), ia credit 262.500 RON pe 25 ani la 7.8% dobândă. Completează suma creditului (nu prețul apartamentului), dobânda și durata.</div>
+          <div class="scenario-cta">→ Apasă să completezi automat</div>
+        </div>
+      </div>
       <div class="fields-row">
         <div class="field">
           <label>Suma imprumutata (RON)</label>
-          <input type="number" id="c-suma" placeholder="45000" min="0">
+          <input type="number" id="c-suma" placeholder="250000" min="0">
         </div>
         <div class="field">
           <label>Dobanda anuala (%)</label>
-          <input type="number" id="c-dob" placeholder="8.5" step="0.1" min="0">
+          <input type="number" id="c-dob" placeholder="7.8" step="0.1" min="0">
         </div>
         <div class="field">
           <label>Durata (ani)</label>
-          <input type="number" id="c-ani" placeholder="5" min="1" max="30">
+          <input type="number" id="c-ani" placeholder="25" min="1" max="30">
         </div>
         <button class="calc-btn" onclick="event.stopPropagation();calcCredit()">Calculeaza</button>
       </div>
@@ -483,22 +529,32 @@ footer {
     <!-- PANEL 2 -->
     <div class="calc-panel" id="panel-oport">
       <div class="panel-title">Ce pierzi daca nu investesti</div>
+
+      <div class="scenario-label">Exemplu real</div>
+      <div class="scenario-strip" onclick="event.stopPropagation();document.getElementById('o-suma').value='5500'; document.getElementById('o-ani').value='3'; document.getElementById('o-tip').value='0.085';">
+        <div class="scenario-avatar">📱</div>
+        <div class="scenario-body">
+          <div class="scenario-name">Ioana, 27 ani — telefon nou</div>
+          <div class="scenario-situation">Vrea să-și cumpere un telefon de 5.500 RON. Înainte să plătească, vrea să vadă cât ar fi devenit banii dacă îi investea 3 ani într-un ETF.</div>
+          <div class="scenario-cta">→ Apasă să completezi automat</div>
+        </div>
+      </div>
       <div class="fields-row">
         <div class="field">
           <label>Suma (RON)</label>
-          <input type="number" id="o-suma" placeholder="6000" min="0">
+          <input type="number" id="o-suma" placeholder="5500" min="0">
         </div>
         <div class="field">
           <label>Perioada (ani)</label>
-          <input type="number" id="o-ani" placeholder="10" min="1" max="40">
+          <input type="number" id="o-ani" placeholder="3" min="1" max="40">
         </div>
         <div class="field">
           <label>Tip investitie</label>
           <select id="o-tip">
             <option value="0.055">Depozit bancar (~5.5%)</option>
-            <option value="0.10" selected>ETF global (~10%)</option>
-            <option value="0.075">Imobiliare Buc. (~7.5%)</option>
-            <option value="0.07">Titluri de stat (~7%)</option>
+            <option value="0.07" selected>Titluri de stat (~7%)</option>
+            <option value="0.085">ETF global (~8.5%)</option>
+            <option value="0.06">Imobiliare Buc. (~6%)</option>
           </select>
         </div>
         <button class="calc-btn" onclick="event.stopPropagation();calcOport()">Calculeaza</button>
@@ -509,7 +565,7 @@ footer {
     <!-- 3. Card de credit -->
     <div class="calc-card" id="card-card" onclick="toggle('card')">
       <div class="card-tag tag-amber">Card credit</div>
-      <div class="card-title">Cat dureaza sa scapi de datoria pe card</div>
+      <div class="card-title">Cat durezi sa scapi de datoria pe card</div>
       <div class="card-desc">Platesti minimul pe cardul de credit? Afla peste cati ani termini de platit si cat dai extra in dobanzi.</div>
       <div class="card-hook">"Datoria de 3.000 RON cu plata minima dureaza 6 ani."</div>
       <button class="open-btn">Calculeaza <span class="arrow">→</span></button>
@@ -517,7 +573,17 @@ footer {
 
     <!-- PANEL 3 -->
     <div class="calc-panel" id="panel-card">
-      <div class="panel-title">Cat dureaza sa scapi de datoria pe card</div>
+      <div class="panel-title">Cat durezi sa scapi de datoria pe card</div>
+
+      <div class="scenario-label">Exemplu real</div>
+      <div class="scenario-strip" onclick="event.stopPropagation();document.getElementById('k-sold').value='4200'; document.getElementById('k-dob').value='35'; document.getElementById('k-plata').value='200';">
+        <div class="scenario-avatar">💳</div>
+        <div class="scenario-body">
+          <div class="scenario-name">Alexandru, 29 ani — card de credit</div>
+          <div class="scenario-situation">Are 4.200 RON datorie pe card la 35% dobândă anuală. Plătește 200 RON/lună și vrea să știe când scapă de datorie.</div>
+          <div class="scenario-cta">→ Apasă să completezi automat</div>
+        </div>
+      </div>
       <div class="fields-row">
         <div class="field">
           <label>Sold card (RON)</label>
@@ -525,7 +591,7 @@ footer {
         </div>
         <div class="field">
           <label>Dobanda anuala (%)</label>
-          <input type="number" id="k-dob" placeholder="28" step="0.5" min="0">
+          <input type="number" id="k-dob" placeholder="35" step="0.5" min="0">
         </div>
         <div class="field">
           <label>Plata lunara (RON)</label>
@@ -548,6 +614,16 @@ footer {
     <!-- PANEL 4 -->
     <div class="calc-panel" id="panel-eco">
       <div class="panel-title">Daca pui X RON/luna, cat ai in N ani</div>
+
+      <div class="scenario-label">Exemplu real</div>
+      <div class="scenario-strip" onclick="event.stopPropagation();document.getElementById('e-lunar').value='500'; document.getElementById('e-init').value='0'; document.getElementById('e-ani').value='20'; document.getElementById('e-rand').value='7';">
+        <div class="scenario-avatar">💰</div>
+        <div class="scenario-body">
+          <div class="scenario-name">Elena, 25 ani — fond de urgență</div>
+          <div class="scenario-situation">Vrea să economisească 500 RON/lună timp de 20 de ani pentru pensie, cu un randament de 7%/an. Completează suma lunară, anii și randamentul.</div>
+          <div class="scenario-cta">→ Apasă să completezi automat</div>
+        </div>
+      </div>
       <div class="fields-row">
         <div class="field">
           <label>Suma lunara (RON)</label>
@@ -563,7 +639,7 @@ footer {
         </div>
         <div class="field">
           <label>Randament anual (%)</label>
-          <input type="number" id="e-rand" placeholder="8" step="0.5" min="0">
+          <input type="number" id="e-rand" placeholder="7" step="0.5" min="0">
         </div>
         <button class="calc-btn" onclick="event.stopPropagation();calcEco()">Calculeaza</button>
       </div>
@@ -574,276 +650,4 @@ footer {
     <div class="calc-card" id="card-inf" onclick="toggle('inf')">
       <div class="card-tag tag-amber">Inflatie</div>
       <div class="card-title">Cat valoreaza banii tai peste X ani</div>
-      <div class="card-desc">Banii din cont pierd valoare in timp. Afla cat putere de cumparare ai pierdut daca nu faci nimic cu ei.</div>
-      <div class="card-hook">"10.000 RON pastrati la saltea valoreaza 7.400 RON in 10 ani."</div>
-      <button class="open-btn">Calculeaza <span class="arrow">→</span></button>
-    </div>
-
-    <!-- PANEL 5 -->
-    <div class="calc-panel" id="panel-inf">
-      <div class="panel-title">Cat valoreaza banii tai peste X ani</div>
-      <div class="fields-row">
-        <div class="field">
-          <label>Suma (RON)</label>
-          <input type="number" id="i-suma" placeholder="10000" min="0">
-        </div>
-        <div class="field">
-          <label>Ani</label>
-          <input type="number" id="i-ani" placeholder="10" min="1" max="50">
-        </div>
-        <div class="field">
-          <label>Rata inflatie (%/an)</label>
-          <input type="number" id="i-rata" placeholder="5" step="0.5" min="0">
-        </div>
-        <button class="calc-btn" onclick="event.stopPropagation();calcInf()">Calculeaza</button>
-      </div>
-      <div class="result-box" id="res-inf"></div>
-    </div>
-
-  </div><!-- /calc-grid -->
-</div><!-- /section-wrap -->
-
-<footer>
-  <div class="footer-brand">Bani<span>Clari</span></div>
-  <div class="footer-note">Calculele sunt estimative si au scop informativ. Nu constituie consultanta financiara. Randamentele istorice nu garanteaza rezultate viitoare.</div>
-</footer>
-
-<script>
-// ── helpers ──────────────────────────────────────────────────────────────────
-function val(id) {
-  const el = document.getElementById(id);
-  const v = el.value.trim();
-  const n = parseFloat(v);
-  return (!v || isNaN(n) || n === 0) ? parseFloat(el.placeholder) : n;
-}
-function fmt(n) {
-  return new Intl.NumberFormat('ro-RO', { maximumFractionDigits: 0 }).format(Math.round(n)) + ' RON';
-}
-function fmtYears(n) {
-  if (n < 1) return 'sub un an';
-  const y = Math.floor(n), m = Math.round((n - y) * 12);
-  let s = y > 0 ? `${y} ${y === 1 ? 'an' : 'ani'}` : '';
-  if (m > 0) s += (s ? ' si ' : '') + `${m} luni`;
-  return s;
-}
-
-// ── toggle panels ─────────────────────────────────────────────────────────────
-let openPanel = null;
-function toggle(id) {
-  const panel = document.getElementById('panel-' + id);
-  const card  = document.getElementById('card-' + id);
-  if (openPanel && openPanel !== id) {
-    document.getElementById('panel-' + openPanel).classList.remove('open');
-    document.getElementById('card-' + openPanel).classList.remove('active');
-  }
-  if (panel.classList.contains('open')) {
-    panel.classList.remove('open');
-    card.classList.remove('active');
-    openPanel = null;
-  } else {
-    panel.classList.add('open');
-    card.classList.add('active');
-    openPanel = id;
-    setTimeout(() => panel.scrollIntoView({ behavior: 'smooth', block: 'nearest' }), 50);
-  }
-}
-
-function showResult(id, html, type) {
-  const el = document.getElementById('res-' + id);
-  el.className = 'result-box show' + (type ? ' ' + type : '');
-  el.innerHTML = html;
-}
-
-// ── 1. CREDIT ────────────────────────────────────────────────────────────────
-function calcCredit() {
-  const suma = val('c-suma');
-  const dob  = val('c-dob') / 100 / 12;
-  const ani  = val('c-ani');
-  if (!suma || !dob || !ani) return;
-  const n     = ani * 12;
-  const rata  = suma * dob * Math.pow(1 + dob, n) / (Math.pow(1 + dob, n) - 1);
-  const total = rata * n;
-  const dob_t = total - suma;
-  const mult  = (total / suma).toFixed(1);
-
-  const shockClass = parseFloat(mult) >= 1.5 ? 'shock' : '';
-  showResult('credit', `
-    <div class="result-headline">${fmt(total)} total platit</div>
-    <div class="result-explain">
-      Rata ta lunara este <strong>${fmt(rata)}/luna</strong>.
-      In total vei da bancii <strong>${fmt(total)}</strong> — adica de <strong>${mult}x</strong> pretul initial.
-      Doar in dobanzi platesti <strong>${fmt(dob_t)}</strong>.
-    </div>
-    <div class="result-grid">
-      <div class="result-item">
-        <span class="result-item-val">${fmt(rata)}</span>
-        <span class="result-item-lbl">rata lunara</span>
-      </div>
-      <div class="result-item">
-        <span class="result-item-val">${fmt(dob_t)}</span>
-        <span class="result-item-lbl">dobanzi totale</span>
-      </div>
-      <div class="result-item">
-        <span class="result-item-val">${mult}x</span>
-        <span class="result-item-lbl">fata de pret</span>
-      </div>
-    </div>
-  `, shockClass);
-}
-
-// ── 2. COST OPORTUNITATE ────────────────────────────────────────────────────
-function calcOport() {
-  const suma = val('o-suma');
-  const ani  = val('o-ani');
-  const rate = val('o-tip');
-  if (!suma || !ani) return;
-  const fv   = suma * Math.pow(1 + rate, ani);
-  const gain = fv - suma;
-  const pct  = Math.round((fv / suma - 1) * 100);
-  const tipLabel = document.getElementById('o-tip').selectedOptions[0].text;
-
-  showResult('oport', `
-    <div class="result-headline">${fmt(fv)} ai fi avut</div>
-    <div class="result-explain">
-      Daca investeai <strong>${fmt(suma)}</strong> in <strong>${tipLabel}</strong>
-      pe <strong>${ani} ani</strong>, ai fi avut <strong>${fmt(fv)}</strong>.
-      Asta inseamna un castig de <strong>${fmt(gain)}</strong> — adica <strong>+${pct}%</strong> fata de ce platesti azi.
-      Acesta e costul real al achizitiei tale.
-    </div>
-    <div class="result-grid">
-      <div class="result-item">
-        <span class="result-item-val">${fmt(gain)}</span>
-        <span class="result-item-lbl">castig pierdut</span>
-      </div>
-      <div class="result-item">
-        <span class="result-item-val">+${pct}%</span>
-        <span class="result-item-lbl">randament total</span>
-      </div>
-    </div>
-  `, 'shock');
-}
-
-// ── 3. CARD CREDIT ──────────────────────────────────────────────────────────
-function calcCard() {
-  const sold  = val('k-sold');
-  const dob   = val('k-dob') / 100 / 12;
-  const plata = val('k-plata');
-  if (!sold || !dob || !plata) return;
-
-  if (plata <= sold * dob) {
-    showResult('card', `
-      <div class="result-headline">Nu vei termina niciodata!</div>
-      <div class="result-explain">Plata ta lunara de <strong>${fmt(plata)}</strong> nu acopera nici macar dobanda lunara de <strong>${fmt(sold * dob)}</strong>. Datoria creste in loc sa scada. Mareste plata lunara la minim <strong>${fmt(Math.ceil(sold * dob * 1.1))}</strong>.</div>
-    `, 'shock');
-    return;
-  }
-
-  let sold_r = sold, luni = 0, dob_total = 0;
-  while (sold_r > 0 && luni < 1200) {
-    const dob_luna = sold_r * dob;
-    dob_total += dob_luna;
-    sold_r = sold_r + dob_luna - plata;
-    if (sold_r < 0) sold_r = 0;
-    luni++;
-  }
-  const ani_str = fmtYears(luni / 12);
-
-  showResult('card', `
-    <div class="result-headline">${ani_str} pana termini</div>
-    <div class="result-explain">
-      Cu o plata de <strong>${fmt(plata)}/luna</strong>, scapi de datoria de <strong>${fmt(sold)}</strong> in <strong>${ani_str}</strong>.
-      In dobanzi vei plati extra <strong>${fmt(dob_total)}</strong>.
-      Daca maresti plata la <strong>${fmt(plata * 1.5)}/luna</strong>, termini mult mai repede.
-    </div>
-    <div class="result-grid">
-      <div class="result-item">
-        <span class="result-item-val">${luni} luni</span>
-        <span class="result-item-lbl">durata totala</span>
-      </div>
-      <div class="result-item">
-        <span class="result-item-val">${fmt(dob_total)}</span>
-        <span class="result-item-lbl">dobanzi platite</span>
-      </div>
-      <div class="result-item">
-        <span class="result-item-val">${fmt(sold + dob_total)}</span>
-        <span class="result-item-lbl">total platit</span>
-      </div>
-    </div>
-  `, 'shock');
-}
-
-// ── 4. ECONOMII LUNARE ───────────────────────────────────────────────────────
-function calcEco() {
-  const lunar = val('e-lunar') || 0;
-  const init  = val('e-init') || 0;
-  const ani   = val('e-ani');
-  const rand  = val('e-rand') / 100 / 12;
-  if (!ani || (!lunar && !init)) return;
-
-  const n      = ani * 12;
-  const fv_init = init * Math.pow(1 + rand, n);
-  const fv_lun  = lunar > 0 ? lunar * (Math.pow(1 + rand, n) - 1) / rand : 0;
-  const total   = fv_init + fv_lun;
-  const depus   = init + lunar * n;
-  const castig  = total - depus;
-
-  showResult('eco', `
-    <div class="result-headline">${fmt(total)}</div>
-    <div class="result-explain">
-      Daca pui <strong>${fmt(lunar)}/luna</strong>${init ? ` si incepi cu ${fmt(init)}` : ''} timp de <strong>${ani} ani</strong>,
-      ajungi la <strong>${fmt(total)}</strong>.
-      Tu depui efectiv <strong>${fmt(depus)}</strong> — restul de <strong>${fmt(castig)}</strong> vine din dobanda compusa.
-    </div>
-    <div class="result-grid">
-      <div class="result-item">
-        <span class="result-item-val">${fmt(depus)}</span>
-        <span class="result-item-lbl">bani depusi de tine</span>
-      </div>
-      <div class="result-item">
-        <span class="result-item-val">${fmt(castig)}</span>
-        <span class="result-item-lbl">castig din dobanzi</span>
-      </div>
-    </div>
-  `, 'good');
-}
-
-// ── 5. INFLATIE ──────────────────────────────────────────────────────────────
-function calcInf() {
-  const suma = val('i-suma');
-  const ani  = val('i-ani');
-  const rata = val('i-rata') / 100;
-  if (!suma || !ani || !rata) return;
-
-  const vReal  = suma / Math.pow(1 + rata, ani);
-  const pierd  = suma - vReal;
-  const pctP   = Math.round((pierd / suma) * 100);
-
-  showResult('inf', `
-    <div class="result-headline">${fmt(vReal)} putere de cumparare</div>
-    <div class="result-explain">
-      Cei <strong>${fmt(suma)}</strong> tinuti la saltea vor valora echivalentul a <strong>${fmt(vReal)}</strong> de azi
-      dupa <strong>${ani} ani</strong> de inflatie de ${(rata*100).toFixed(1)}%.
-      Adica ai pierdut <strong>${pctP}% din valoare</strong> fara sa faci nimic.
-    </div>
-    <div class="result-grid">
-      <div class="result-item">
-        <span class="result-item-val">${fmt(pierd)}</span>
-        <span class="result-item-lbl">valoare pierduta</span>
-      </div>
-      <div class="result-item">
-        <span class="result-item-val">${pctP}%</span>
-        <span class="result-item-lbl">depreciere</span>
-      </div>
-    </div>
-  `, 'shock');
-}
-
-// Enter key support
-document.addEventListener('keydown', e => {
-  if (e.key !== 'Enter' || !openPanel) return;
-  const fns = { credit: calcCredit, oport: calcOport, card: calcCard, eco: calcEco, inf: calcInf };
-  if (fns[openPanel]) fns[openPanel]();
-});
-</script>
-</body>
-</html>
+      <div class="card-desc">Banii
