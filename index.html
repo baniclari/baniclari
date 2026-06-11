@@ -522,7 +522,97 @@ footer {
       <div class="result-box" id="res-credit"></div>
     </div>
 
-    <!-- 2. Cost oportunitate -->
+    <!-- 2. Rambursare anticipata -->
+    <div class="calc-card" id="card-ramb" onclick="toggle('ramb')">
+      <div class="card-tag tag-blue">Rambursare</div>
+      <div class="card-title">Rambursare anticipata partiala</div>
+      <div class="card-desc">Ai o suma extra si vrei sa platesti anticipat din credit. Afla ce e mai avantajos: rata mai mica sau perioada mai scurta.</div>
+      <div class="card-hook">"Cu 20.000 RON platiti anticipat, scurtezi creditul cu 4 ani."</div>
+      <button class="open-btn">Calculeaza <span class="arrow">→</span></button>
+    </div>
+
+    <!-- PANEL 2 -->
+    <div class="calc-panel" id="panel-ramb">
+      <div class="panel-title">Rambursare anticipata partiala</div>
+      <div class="scenario-label">Exemplu real</div>
+      <div class="scenario-strip" onclick="event.stopPropagation();document.getElementById('r-sold').value='200000';document.getElementById('r-dob').value='7.8';document.getElementById('r-luni').value='240';document.getElementById('r-suma').value='20000';">
+        <div class="scenario-avatar">🏦</div>
+        <div class="scenario-body">
+          <div class="scenario-name">Cristian, 38 ani — credit ipotecar</div>
+          <div class="scenario-situation">Are un credit cu sold ramas de 200.000 RON, dobanda 7.8%, 240 luni ramase. A primit un bonus de 20.000 RON si vrea sa stie ce varianta de rambursare anticipata ii aduce mai mult beneficiu.</div>
+          <div class="scenario-cta">→ Apasa sa completezi automat</div>
+        </div>
+      </div>
+      <div class="fields-row">
+        <div class="field">
+          <label>Sold ramas (RON)</label>
+          <input type="number" id="r-sold" placeholder="200000" min="0">
+        </div>
+        <div class="field">
+          <label>Dobanda anuala (%)</label>
+          <input type="number" id="r-dob" placeholder="7.8" step="0.1" min="0">
+        </div>
+        <div class="field">
+          <label>Luni ramase</label>
+          <input type="number" id="r-luni" placeholder="240" min="1" max="360">
+        </div>
+        <div class="field">
+          <label>Suma rambursata (RON)</label>
+          <input type="number" id="r-suma" placeholder="20000" min="0">
+        </div>
+        <button class="calc-btn" onclick="event.stopPropagation();calcRamb()">Calculeaza</button>
+      </div>
+      <div class="result-box" id="res-ramb"></div>
+    </div>
+
+    <!-- 3. Chirie vs Cumparare -->
+    <div class="calc-card" id="card-chirie" onclick="toggle('chirie')">
+      <div class="card-tag tag-green">Imobiliare</div>
+      <div class="card-title">Chirie sau cumparare?</div>
+      <div class="card-desc">Merita sa cumperi un apartament sau e mai bine sa stai in chirie si sa investesti diferenta? Afla la cati ani devine cumpararea mai avantajoasa.</div>
+      <div class="card-hook">"La preturile actuale, cumpararea devine mai buna dupa 9 ani."</div>
+      <button class="open-btn">Calculeaza <span class="arrow">→</span></button>
+    </div>
+
+    <!-- PANEL 3 -->
+    <div class="calc-panel" id="panel-chirie">
+      <div class="panel-title">Chirie sau cumparare?</div>
+      <div class="scenario-label">Exemplu real</div>
+      <div class="scenario-strip" onclick="event.stopPropagation();document.getElementById('ch-pret').value='350000';document.getElementById('ch-avans').value='25';document.getElementById('ch-dob').value='7.8';document.getElementById('ch-chirie').value='1200';document.getElementById('ch-ani').value='25';">
+        <div class="scenario-avatar">🏠</div>
+        <div class="scenario-body">
+          <div class="scenario-name">Andreea, 30 ani — decizia vietii</div>
+          <div class="scenario-situation">Plateste 1.200 RON chirie si se gandeste sa cumpere un apartament de 350.000 RON cu avans 25% si credit pe 25 ani la 7.8%. Vrea sa stie cand devine cumpararea mai avantajoasa financiar.</div>
+          <div class="scenario-cta">→ Apasa sa completezi automat</div>
+        </div>
+      </div>
+      <div class="fields-row">
+        <div class="field">
+          <label>Pret apartament (RON)</label>
+          <input type="number" id="ch-pret" placeholder="350000" min="0">
+        </div>
+        <div class="field">
+          <label>Avans (%)</label>
+          <input type="number" id="ch-avans" placeholder="25" min="5" max="90">
+        </div>
+        <div class="field">
+          <label>Dobanda credit (%)</label>
+          <input type="number" id="ch-dob" placeholder="7.8" step="0.1" min="0">
+        </div>
+        <div class="field">
+          <label>Chirie lunara (RON)</label>
+          <input type="number" id="ch-chirie" placeholder="1200" min="0">
+        </div>
+        <div class="field">
+          <label>Durata credit (ani)</label>
+          <input type="number" id="ch-ani" placeholder="25" min="5" max="30">
+        </div>
+        <button class="calc-btn" onclick="event.stopPropagation();calcChirie()">Calculeaza</button>
+      </div>
+      <div class="result-box" id="res-chirie"></div>
+    </div>
+
+    <!-- 4. Cost oportunitate -->
     <div class="calc-card" id="card-oport" onclick="toggle('oport')">
       <div class="card-tag tag-blue">Oportunitate</div>
       <div class="card-title">Ce pierzi daca nu investesti</div>
@@ -531,7 +621,7 @@ footer {
       <button class="open-btn">Calculeaza <span class="arrow">→</span></button>
     </div>
 
-    <!-- PANEL 2 -->
+    <!-- PANEL 4 -->
     <div class="calc-panel" id="panel-oport">
       <div class="panel-title">Ce pierzi daca nu investesti</div>
 
@@ -567,7 +657,7 @@ footer {
       <div class="result-box" id="res-oport"></div>
     </div>
 
-    <!-- 3. Card de credit -->
+    <!-- 5. Card de credit -->
     <div class="calc-card" id="card-card" onclick="toggle('card')">
       <div class="card-tag tag-amber">Card credit</div>
       <div class="card-title">Cat dureaza sa scapi de datoria pe card</div>
@@ -576,7 +666,7 @@ footer {
       <button class="open-btn">Calculeaza <span class="arrow">→</span></button>
     </div>
 
-    <!-- PANEL 3 -->
+    <!-- PANEL 5 -->
     <div class="calc-panel" id="panel-card">
       <div class="panel-title">Cat dureaza sa scapi de datoria pe card</div>
 
@@ -607,7 +697,7 @@ footer {
       <div class="result-box" id="res-card"></div>
     </div>
 
-    <!-- 4. Economii lunare -->
+    <!-- 6. Economii lunare -->
     <div class="calc-card" id="card-eco" onclick="toggle('eco')">
       <div class="card-tag tag-green">Economii</div>
       <div class="card-title">Daca pui X RON/luna, cat ai in N ani</div>
@@ -616,7 +706,7 @@ footer {
       <button class="open-btn">Calculeaza <span class="arrow">→</span></button>
     </div>
 
-    <!-- PANEL 4 -->
+    <!-- PANEL 6 -->
     <div class="calc-panel" id="panel-eco">
       <div class="panel-title">Daca pui X RON/luna, cat ai in N ani</div>
 
@@ -651,7 +741,7 @@ footer {
       <div class="result-box" id="res-eco"></div>
     </div>
 
-    <!-- 5. Inflatie -->
+    <!-- 7. Inflatie -->
     <div class="calc-card" id="card-inf" onclick="toggle('inf')">
       <div class="card-tag tag-amber">Inflatie</div>
       <div class="card-title">Cat valoreaza banii tai peste X ani</div>
@@ -660,7 +750,7 @@ footer {
       <button class="open-btn">Calculeaza <span class="arrow">→</span></button>
     </div>
 
-    <!-- PANEL 5 -->
+    <!-- PANEL 7 -->
     <div class="calc-panel" id="panel-inf">
       <div class="panel-title">Cat valoreaza banii tai peste X ani</div>
 
@@ -690,6 +780,7 @@ footer {
       </div>
       <div class="result-box" id="res-inf"></div>
     </div>
+
 
   </div><!-- /calc-grid -->
 </div><!-- /section-wrap -->
@@ -929,10 +1020,139 @@ function calcInf() {
   `, 'shock');
 }
 
+
+// ── 6. RAMBURSARE ANTICIPATA ────────────────────────────────────────────────
+function calcRamb() {
+  const sold  = val('r-sold');
+  const dob   = val('r-dob') / 100 / 12;
+  const luni  = val('r-luni');
+  const suma  = val('r-suma');
+  if (!sold || !dob || !luni || !suma || suma >= sold) return;
+
+  // Rata lunara curenta
+  const rataAct = sold * dob * Math.pow(1+dob, luni) / (Math.pow(1+dob, luni) - 1);
+  const totalAct = rataAct * luni;
+
+  const soldNou = sold - suma;
+
+  // Varianta 1: rata mai mica, aceeasi perioada
+  const rata1 = soldNou * dob * Math.pow(1+dob, luni) / (Math.pow(1+dob, luni) - 1);
+  const total1 = rata1 * luni;
+  const economie1 = totalAct - total1;
+
+  // Varianta 2: aceeasi rata, perioada mai scurta
+  const luni2 = Math.ceil(Math.log(rataAct / (rataAct - soldNou * dob)) / Math.log(1 + dob));
+  const total2 = rataAct * luni2;
+  const economie2 = totalAct - total2;
+  const luni_salvate = luni - luni2;
+
+  const better = economie2 > economie1 ? 'perioada' : 'rata';
+
+  showResult('ramb', `
+    <div class="result-headline">${better === 'perioada' ? 'Mai avantajos: scurtezi perioada' : 'Mai avantajos: reduci rata'}</div>
+    <div class="result-explain">
+      Dupa rambursarea de <strong>${fmt(suma)}</strong>, ai doua optiuni:
+    </div>
+    <div class="result-grid" style="margin-top:16px">
+      <div class="result-item" style="flex:1;padding:16px;background:${better==='rata'?'var(--green-lt)':'var(--white)'};border-radius:10px;border:1.5px solid ${better==='rata'?'var(--green)':'var(--border)'}">
+        <span class="result-item-val">${fmt(rata1)}/luna</span>
+        <span class="result-item-lbl">Varianta 1 — rata mai mica</span>
+        <span style="display:block;font-size:12px;color:var(--green);margin-top:4px;font-weight:600">Economie: ${fmt(economie1)}</span>
+        <span style="display:block;font-size:11px;color:var(--muted);margin-top:2px">Perioada ramane ${luni} luni</span>
+      </div>
+      <div class="result-item" style="flex:1;padding:16px;background:${better==='perioada'?'var(--green-lt)':'var(--white)'};border-radius:10px;border:1.5px solid ${better==='perioada'?'var(--green)':'var(--border)'}">
+        <span class="result-item-val">${fmtYears(luni2/12)} ramasi</span>
+        <span class="result-item-lbl">Varianta 2 — perioada mai scurta</span>
+        <span style="display:block;font-size:12px;color:var(--green);margin-top:4px;font-weight:600">Economie: ${fmt(economie2)}</span>
+        <span style="display:block;font-size:11px;color:var(--muted);margin-top:2px">Scurtezi cu ${fmtYears(luni_salvate/12)}, rata ramane ${fmt(rataAct)}</span>
+      </div>
+    </div>
+  `, better === 'perioada' ? 'good' : '');
+}
+
+// ── 7. CHIRIE VS CUMPARARE ───────────────────────────────────────────────────
+function calcChirie() {
+  const pret   = val('ch-pret');
+  const avansP = val('ch-avans') / 100;
+  const dob    = val('ch-dob') / 100 / 12;
+  const chirie = val('ch-chirie');
+  const ani    = val('ch-ani');
+  if (!pret || !dob || !chirie || !ani) return;
+
+  const avans  = pret * avansP;
+  const credit = pret - avans;
+  const n      = ani * 12;
+  const rata   = credit * dob * Math.pow(1+dob, n) / (Math.pow(1+dob, n) - 1);
+  
+  // Cost lunar cumparare = rata + intretinere estimata (~0.1%/an din valoare)
+  const intretinere = pret * 0.001 / 12;
+  const costLunarCump = rata + intretinere;
+  
+  // Diferenta fata de chirie investita lunar la 7% (titluri de stat)
+  const randLunar = 0.07 / 12;
+  const difLunara = Math.max(0, costLunarCump - chirie);
+  const avansInvestit = avans;
+  
+  // Calculeaza an cu an breakeven
+  let breakeven = null;
+  let patrimoniu_chirie = avansInvestit;
+  let patrimoniu_cumparare = avans; // avansul e deja investit in imobil
+  let apreciere_anuala = 0.04; // 4% apreciere imobil/an Romania
+  
+  for (let luna = 1; luna <= n; luna++) {
+    // Chirie: investeste avansul + diferenta de plata lunara
+    patrimoniu_chirie = patrimoniu_chirie * (1 + randLunar) + difLunara;
+    
+    // Cumparare: valoarea imobilului creste
+    const valoareImobil = pret * Math.pow(1 + apreciere_anuala/12, luna);
+    // Sold credit ramas
+    const soldRamas = credit * (Math.pow(1+dob, n) - Math.pow(1+dob, luna)) / (Math.pow(1+dob, n) - 1);
+    patrimoniu_cumparare = valoareImobil - soldRamas;
+    
+    if (patrimoniu_cumparare > patrimoniu_chirie && !breakeven) {
+      breakeven = luna;
+    }
+  }
+
+  const totalChirie = chirie * n;
+  const totalCredit = rata * n;
+
+  let breakevenText, breakevenClass;
+  if (breakeven) {
+    breakevenText = fmtYears(breakeven / 12);
+    breakevenClass = breakeven < n * 0.5 ? 'good' : '';
+  } else {
+    breakevenText = 'peste ' + ani + ' ani';
+    breakevenClass = 'shock';
+  }
+
+  showResult('chirie', `
+    <div class="result-headline">${breakeven ? 'Cumpararea devine mai buna dupa ' + breakevenText : 'Chiria e mai avantajoasa pe ' + ani + ' ani'}</div>
+    <div class="result-explain">
+      Rata lunara de <strong>${fmt(rata)}</strong> vs chiria de <strong>${fmt(chirie)}</strong>.
+      ${breakeven ? `Dupa <strong>${breakevenText}</strong>, patrimoniul tau ca proprietar depaseste varianta chirie + investitie.` : `Pe orizontul de ${ani} ani, chiria cu investitia diferentei ramane mai avantajoasa financiar.`}
+    </div>
+    <div class="result-grid">
+      <div class="result-item">
+        <span class="result-item-val">${fmt(rata)}</span>
+        <span class="result-item-lbl">rata lunara credit</span>
+      </div>
+      <div class="result-item">
+        <span class="result-item-val">${fmt(avans)}</span>
+        <span class="result-item-lbl">avans necesar</span>
+      </div>
+      <div class="result-item">
+        <span class="result-item-val">${fmt(totalCredit)}</span>
+        <span class="result-item-lbl">total platit credit</span>
+      </div>
+    </div>
+  `, breakevenClass);
+}
+
 // Enter key support
 document.addEventListener('keydown', e => {
   if (e.key !== 'Enter' || !openPanel) return;
-  const fns = { credit: calcCredit, oport: calcOport, card: calcCard, eco: calcEco, inf: calcInf };
+  const fns = { credit: calcCredit, oport: calcOport, card: calcCard, eco: calcEco, inf: calcInf, ramb: calcRamb, chirie: calcChirie };
   if (fns[openPanel]) fns[openPanel]();
 });
 </script>
