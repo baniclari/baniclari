@@ -581,7 +581,8 @@ footer {
 function val(id) {
   const el = document.getElementById(id);
   const v = el.value.trim();
-  return parseFloat(v !== '' ? v : el.placeholder);
+  const n = parseFloat(v);
+  return (!v || isNaN(n) || n === 0) ? parseFloat(el.placeholder) : n;
 }
 function fmt(n) {
   return new Intl.NumberFormat('ro-RO', { maximumFractionDigits: 0 }).format(Math.round(n)) + ' RON';
