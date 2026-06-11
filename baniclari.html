@@ -1,0 +1,816 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BaniClari — Calculatoare financiare pentru oameni normali</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&family=Inter:wght@400;500;600&family=DM+Mono:wght@400;500&display=swap');
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --bg:       #F7F6F2;
+  --white:    #FFFFFF;
+  --ink:      #1A1A2E;
+  --ink2:     #3D3D5C;
+  --muted:    #9090A8;
+  --border:   #E4E4EF;
+  --blue:     #2D5BE3;
+  --blue-lt:  #EEF2FD;
+  --green:    #00A86B;
+  --green-lt: #E6F7F1;
+  --red:      #E8394A;
+  --red-lt:   #FDEEF0;
+  --amber:    #F59E0B;
+  --amber-lt: #FEF3C7;
+}
+
+body {
+  background: var(--bg);
+  color: var(--ink);
+  font-family: 'Inter', sans-serif;
+  font-size: 15px;
+  line-height: 1.6;
+}
+
+/* ── NAV ── */
+nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 18px 24px;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+.brand {
+  font-family: 'Sora', sans-serif;
+  font-weight: 800;
+  font-size: 20px;
+  color: var(--ink);
+  letter-spacing: -.03em;
+}
+.brand span { color: var(--blue); }
+.nav-tag {
+  background: var(--blue-lt);
+  color: var(--blue);
+  font-size: 11px;
+  font-weight: 600;
+  padding: 5px 12px;
+  border-radius: 20px;
+  letter-spacing: .04em;
+}
+
+/* ── HERO ── */
+.hero {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 48px 24px 40px;
+}
+.hero-eyebrow {
+  display: inline-block;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--muted);
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  margin-bottom: 16px;
+}
+.hero h1 {
+  font-family: 'Sora', sans-serif;
+  font-size: clamp(30px, 5vw, 50px);
+  font-weight: 800;
+  line-height: 1.1;
+  letter-spacing: -.03em;
+  color: var(--ink);
+  margin-bottom: 16px;
+}
+.hero h1 em {
+  font-style: normal;
+  color: var(--blue);
+  position: relative;
+}
+.hero h1 em::after {
+  content: '';
+  position: absolute;
+  left: 0; right: 0; bottom: 2px;
+  height: 3px;
+  background: var(--blue);
+  opacity: .25;
+  border-radius: 2px;
+}
+.hero-sub {
+  font-size: 17px;
+  color: var(--ink2);
+  max-width: 540px;
+  line-height: 1.65;
+  margin-bottom: 32px;
+}
+.hero-stat-row {
+  display: flex;
+  gap: 32px;
+  flex-wrap: wrap;
+}
+.hero-stat { text-align: left; }
+.hero-stat-num {
+  font-family: 'DM Mono', monospace;
+  font-size: 22px;
+  font-weight: 500;
+  color: var(--ink);
+  display: block;
+}
+.hero-stat-label {
+  font-size: 12px;
+  color: var(--muted);
+}
+
+/* ── SECTION TITLE ── */
+.section-wrap {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+.section-title {
+  font-family: 'Sora', sans-serif;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--muted);
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  margin-bottom: 20px;
+  padding-top: 8px;
+  border-top: 1.5px solid var(--border);
+}
+
+/* ── CALC GRID ── */
+.calc-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 16px;
+  margin-bottom: 48px;
+}
+
+/* ── CALC CARD ── */
+.calc-card {
+  background: var(--white);
+  border: 1.5px solid var(--border);
+  border-radius: 16px;
+  padding: 24px;
+  cursor: pointer;
+  transition: border-color .18s, box-shadow .18s, transform .15s;
+  position: relative;
+  overflow: hidden;
+}
+.calc-card:hover {
+  border-color: var(--blue);
+  box-shadow: 0 4px 24px rgba(45,91,227,.10);
+  transform: translateY(-2px);
+}
+.calc-card.active {
+  border-color: var(--blue);
+  box-shadow: 0 4px 32px rgba(45,91,227,.14);
+}
+
+.card-tag {
+  display: inline-block;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  padding: 3px 10px;
+  border-radius: 20px;
+  margin-bottom: 14px;
+}
+.tag-blue   { background: var(--blue-lt);  color: var(--blue); }
+.tag-green  { background: var(--green-lt); color: var(--green); }
+.tag-red    { background: var(--red-lt);   color: var(--red); }
+.tag-amber  { background: var(--amber-lt); color: var(--amber); }
+
+.card-title {
+  font-family: 'Sora', sans-serif;
+  font-size: 17px;
+  font-weight: 700;
+  color: var(--ink);
+  margin-bottom: 6px;
+  letter-spacing: -.02em;
+}
+.card-desc {
+  font-size: 13px;
+  color: var(--ink2);
+  line-height: 1.55;
+  margin-bottom: 18px;
+}
+.card-hook {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--muted);
+  font-style: italic;
+  margin-bottom: 18px;
+  padding: 8px 12px;
+  background: var(--bg);
+  border-radius: 8px;
+  border-left: 3px solid var(--border);
+}
+
+.open-btn {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--blue);
+  background: var(--blue-lt);
+  border: none;
+  border-radius: 8px;
+  padding: 9px 16px;
+  cursor: pointer;
+  transition: background .15s;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+.open-btn:hover { background: #dde6fb; }
+.open-btn .arrow { transition: transform .15s; }
+.calc-card:hover .open-btn .arrow { transform: translateX(3px); }
+
+/* ── INLINE CALCULATOR PANEL ── */
+.calc-panel {
+  display: none;
+  background: var(--bg);
+  border: 1.5px solid var(--blue);
+  border-radius: 16px;
+  padding: 28px;
+  margin-top: 12px;
+  grid-column: 1 / -1;
+  animation: slideDown .22s ease;
+}
+.calc-panel.open { display: block; }
+
+@keyframes slideDown {
+  from { opacity: 0; transform: translateY(-8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.panel-title {
+  font-family: 'Sora', sans-serif;
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--ink);
+  margin-bottom: 20px;
+  letter-spacing: -.02em;
+}
+
+.fields-row {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+  margin-bottom: 20px;
+  align-items: flex-end;
+}
+.field { flex: 1; min-width: 140px; }
+.field label {
+  display: block;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: .07em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 7px;
+}
+.field input, .field select {
+  width: 100%;
+  padding: 11px 14px;
+  background: var(--white);
+  border: 1.5px solid var(--border);
+  border-radius: 10px;
+  font-family: 'DM Mono', monospace;
+  font-size: 15px;
+  color: var(--ink);
+  outline: none;
+  transition: border-color .15s;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+}
+.field input:focus, .field select:focus { border-color: var(--blue); }
+
+.calc-btn {
+  padding: 12px 28px;
+  background: var(--blue);
+  color: #fff;
+  font-size: 14px;
+  font-weight: 700;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: opacity .15s, transform .12s;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+.calc-btn:hover { opacity: .88; transform: translateY(-1px); }
+
+/* result box */
+.result-box {
+  display: none;
+  margin-top: 20px;
+  padding: 20px 22px;
+  border-radius: 12px;
+  border-left: 4px solid var(--blue);
+  background: var(--white);
+}
+.result-box.show { display: block; }
+.result-box.shock { border-left-color: var(--red); background: var(--red-lt); }
+.result-box.good  { border-left-color: var(--green); background: var(--green-lt); }
+
+.result-headline {
+  font-family: 'Sora', sans-serif;
+  font-size: 22px;
+  font-weight: 800;
+  color: var(--ink);
+  margin-bottom: 6px;
+  letter-spacing: -.02em;
+}
+.result-explain {
+  font-size: 14px;
+  color: var(--ink2);
+  line-height: 1.6;
+}
+.result-explain strong { color: var(--ink); }
+
+.result-grid {
+  display: flex;
+  gap: 24px;
+  flex-wrap: wrap;
+  margin-top: 16px;
+  padding-top: 16px;
+  border-top: 1px solid var(--border);
+}
+.result-item { }
+.result-item-val {
+  font-family: 'DM Mono', monospace;
+  font-size: 16px;
+  font-weight: 500;
+  color: var(--ink);
+  display: block;
+}
+.result-item-lbl { font-size: 11px; color: var(--muted); }
+
+/* ── FOOTER ── */
+footer {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 24px 24px 48px;
+  border-top: 1.5px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+.footer-brand {
+  font-family: 'Sora', sans-serif;
+  font-weight: 800;
+  font-size: 16px;
+  color: var(--ink);
+  letter-spacing: -.02em;
+}
+.footer-brand span { color: var(--blue); }
+.footer-note { font-size: 12px; color: var(--muted); max-width: 400px; line-height: 1.5; }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="brand">Bani<span>Clari</span></div>
+  <div class="nav-tag">gratuit · fara cont</div>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <span class="hero-eyebrow">Calculatoare financiare</span>
+  <h1>Afla cat platesti<br><em>cu adevarat</em></h1>
+  <p class="hero-sub">Calculatoare simple pentru decizii cu bani — credite, achizitii, investitii. Fara jargon, fara cifre ascunse. Rezultate pe intelesul oricui.</p>
+  <div class="hero-stat-row">
+    <div class="hero-stat">
+      <span class="hero-stat-num">5</span>
+      <span class="hero-stat-label">calculatoare</span>
+    </div>
+    <div class="hero-stat">
+      <span class="hero-stat-num">0 RON</span>
+      <span class="hero-stat-label">cost</span>
+    </div>
+    <div class="hero-stat">
+      <span class="hero-stat-num">~30 sec</span>
+      <span class="hero-stat-label">per calcul</span>
+    </div>
+  </div>
+</div>
+
+<!-- CALCULATOARE -->
+<div class="section-wrap">
+  <div class="section-title">Calculatoare disponibile</div>
+
+  <div class="calc-grid" id="grid">
+
+    <!-- 1. Credit real -->
+    <div class="calc-card" id="card-credit" onclick="toggle('credit')">
+      <div class="card-tag tag-red">Credit</div>
+      <div class="card-title">Cat platesti total pentru un credit</div>
+      <div class="card-desc">Banca iti arata rata lunara. Noi iti aratam cat dai efectiv pana la final — si de cate ori ai platit produsul.</div>
+      <div class="card-hook">"Masina costa 45.000 RON. Dar cu creditul ai platit 68.000 RON."</div>
+      <button class="open-btn">Calculeaza <span class="arrow">→</span></button>
+    </div>
+
+    <!-- PANEL 1 -->
+    <div class="calc-panel" id="panel-credit">
+      <div class="panel-title">Cat platesti total pentru un credit</div>
+      <div class="fields-row">
+        <div class="field">
+          <label>Suma imprumutata (RON)</label>
+          <input type="number" id="c-suma" placeholder="45000" min="0">
+        </div>
+        <div class="field">
+          <label>Dobanda anuala (%)</label>
+          <input type="number" id="c-dob" placeholder="8.5" step="0.1" min="0">
+        </div>
+        <div class="field">
+          <label>Durata (ani)</label>
+          <input type="number" id="c-ani" placeholder="5" min="1" max="30">
+        </div>
+        <button class="calc-btn" onclick="event.stopPropagation();calcCredit()">Calculeaza</button>
+      </div>
+      <div class="result-box" id="res-credit"></div>
+    </div>
+
+    <!-- 2. Cost oportunitate -->
+    <div class="calc-card" id="card-oport" onclick="toggle('oport')">
+      <div class="card-tag tag-blue">Oportunitate</div>
+      <div class="card-title">Ce pierzi daca nu investesti</div>
+      <div class="card-desc">Daca in loc sa cumperi ceva, investeai banii — cat ai fi avut dupa 10 ani? Asta e costul de oportunitate.</div>
+      <div class="card-hook">"Telefonul de 6.000 RON te-a costat 14.200 RON in 10 ani."</div>
+      <button class="open-btn">Calculeaza <span class="arrow">→</span></button>
+    </div>
+
+    <!-- PANEL 2 -->
+    <div class="calc-panel" id="panel-oport">
+      <div class="panel-title">Ce pierzi daca nu investesti</div>
+      <div class="fields-row">
+        <div class="field">
+          <label>Suma (RON)</label>
+          <input type="number" id="o-suma" placeholder="6000" min="0">
+        </div>
+        <div class="field">
+          <label>Perioada (ani)</label>
+          <input type="number" id="o-ani" placeholder="10" min="1" max="40">
+        </div>
+        <div class="field">
+          <label>Tip investitie</label>
+          <select id="o-tip">
+            <option value="0.055">Depozit bancar (~5.5%)</option>
+            <option value="0.10" selected>ETF global (~10%)</option>
+            <option value="0.075">Imobiliare Buc. (~7.5%)</option>
+            <option value="0.07">Titluri de stat (~7%)</option>
+          </select>
+        </div>
+        <button class="calc-btn" onclick="event.stopPropagation();calcOport()">Calculeaza</button>
+      </div>
+      <div class="result-box" id="res-oport"></div>
+    </div>
+
+    <!-- 3. Card de credit -->
+    <div class="calc-card" id="card-card" onclick="toggle('card')">
+      <div class="card-tag tag-amber">Card credit</div>
+      <div class="card-title">Cat durezi sa scapi de datoria pe card</div>
+      <div class="card-desc">Platesti minimul pe cardul de credit? Afla peste cati ani termini de platit si cat dai extra in dobanzi.</div>
+      <div class="card-hook">"Datoria de 3.000 RON cu plata minima dureaza 6 ani."</div>
+      <button class="open-btn">Calculeaza <span class="arrow">→</span></button>
+    </div>
+
+    <!-- PANEL 3 -->
+    <div class="calc-panel" id="panel-card">
+      <div class="panel-title">Cat durezi sa scapi de datoria pe card</div>
+      <div class="fields-row">
+        <div class="field">
+          <label>Sold card (RON)</label>
+          <input type="number" id="k-sold" placeholder="3000" min="0">
+        </div>
+        <div class="field">
+          <label>Dobanda anuala (%)</label>
+          <input type="number" id="k-dob" placeholder="28" step="0.5" min="0">
+        </div>
+        <div class="field">
+          <label>Plata lunara (RON)</label>
+          <input type="number" id="k-plata" placeholder="150" min="0">
+        </div>
+        <button class="calc-btn" onclick="event.stopPropagation();calcCard()">Calculeaza</button>
+      </div>
+      <div class="result-box" id="res-card"></div>
+    </div>
+
+    <!-- 4. Economii lunare -->
+    <div class="calc-card" id="card-eco" onclick="toggle('eco')">
+      <div class="card-tag tag-green">Economii</div>
+      <div class="card-title">Daca pui X RON/luna, cat ai in N ani</div>
+      <div class="card-desc">Puterea dobanzii compuse explicata simplu. Pune o suma mica lunar si vezi cum creste in timp.</div>
+      <div class="card-hook">"500 RON/luna timp de 15 ani = 200.000 RON."</div>
+      <button class="open-btn">Calculeaza <span class="arrow">→</span></button>
+    </div>
+
+    <!-- PANEL 4 -->
+    <div class="calc-panel" id="panel-eco">
+      <div class="panel-title">Daca pui X RON/luna, cat ai in N ani</div>
+      <div class="fields-row">
+        <div class="field">
+          <label>Suma lunara (RON)</label>
+          <input type="number" id="e-lunar" placeholder="500" min="0">
+        </div>
+        <div class="field">
+          <label>Suma initiala (RON)</label>
+          <input type="number" id="e-init" placeholder="0" min="0">
+        </div>
+        <div class="field">
+          <label>Ani</label>
+          <input type="number" id="e-ani" placeholder="15" min="1" max="40">
+        </div>
+        <div class="field">
+          <label>Randament anual (%)</label>
+          <input type="number" id="e-rand" placeholder="8" step="0.5" min="0">
+        </div>
+        <button class="calc-btn" onclick="event.stopPropagation();calcEco()">Calculeaza</button>
+      </div>
+      <div class="result-box" id="res-eco"></div>
+    </div>
+
+    <!-- 5. Inflatie -->
+    <div class="calc-card" id="card-inf" onclick="toggle('inf')">
+      <div class="card-tag tag-amber">Inflatie</div>
+      <div class="card-title">Cat valoreaza banii tai peste X ani</div>
+      <div class="card-desc">Banii din cont pierd valoare in timp. Afla cat putere de cumparare ai pierdut daca nu faci nimic cu ei.</div>
+      <div class="card-hook">"10.000 RON pastrati la saltea valoreaza 7.400 RON in 10 ani."</div>
+      <button class="open-btn">Calculeaza <span class="arrow">→</span></button>
+    </div>
+
+    <!-- PANEL 5 -->
+    <div class="calc-panel" id="panel-inf">
+      <div class="panel-title">Cat valoreaza banii tai peste X ani</div>
+      <div class="fields-row">
+        <div class="field">
+          <label>Suma (RON)</label>
+          <input type="number" id="i-suma" placeholder="10000" min="0">
+        </div>
+        <div class="field">
+          <label>Ani</label>
+          <input type="number" id="i-ani" placeholder="10" min="1" max="50">
+        </div>
+        <div class="field">
+          <label>Rata inflatie (%/an)</label>
+          <input type="number" id="i-rata" placeholder="5" step="0.5" min="0">
+        </div>
+        <button class="calc-btn" onclick="event.stopPropagation();calcInf()">Calculeaza</button>
+      </div>
+      <div class="result-box" id="res-inf"></div>
+    </div>
+
+  </div><!-- /calc-grid -->
+</div><!-- /section-wrap -->
+
+<footer>
+  <div class="footer-brand">Bani<span>Clari</span></div>
+  <div class="footer-note">Calculele sunt estimative si au scop informativ. Nu constituie consultanta financiara. Randamentele istorice nu garanteaza rezultate viitoare.</div>
+</footer>
+
+<script>
+// ── helpers ──────────────────────────────────────────────────────────────────
+function val(id) {
+  const el = document.getElementById(id);
+  const v = el.value.trim();
+  return parseFloat(v !== '' ? v : el.placeholder);
+}
+function fmt(n) {
+  return new Intl.NumberFormat('ro-RO', { maximumFractionDigits: 0 }).format(Math.round(n)) + ' RON';
+}
+function fmtYears(n) {
+  if (n < 1) return 'sub un an';
+  const y = Math.floor(n), m = Math.round((n - y) * 12);
+  let s = y > 0 ? `${y} ${y === 1 ? 'an' : 'ani'}` : '';
+  if (m > 0) s += (s ? ' si ' : '') + `${m} luni`;
+  return s;
+}
+
+// ── toggle panels ─────────────────────────────────────────────────────────────
+let openPanel = null;
+function toggle(id) {
+  const panel = document.getElementById('panel-' + id);
+  const card  = document.getElementById('card-' + id);
+  if (openPanel && openPanel !== id) {
+    document.getElementById('panel-' + openPanel).classList.remove('open');
+    document.getElementById('card-' + openPanel).classList.remove('active');
+  }
+  if (panel.classList.contains('open')) {
+    panel.classList.remove('open');
+    card.classList.remove('active');
+    openPanel = null;
+  } else {
+    panel.classList.add('open');
+    card.classList.add('active');
+    openPanel = id;
+    setTimeout(() => panel.scrollIntoView({ behavior: 'smooth', block: 'nearest' }), 50);
+  }
+}
+
+function showResult(id, html, type) {
+  const el = document.getElementById('res-' + id);
+  el.className = 'result-box show' + (type ? ' ' + type : '');
+  el.innerHTML = html;
+}
+
+// ── 1. CREDIT ────────────────────────────────────────────────────────────────
+function calcCredit() {
+  const suma = val('c-suma');
+  const dob  = val('c-dob') / 100 / 12;
+  const ani  = val('c-ani');
+  if (!suma || !dob || !ani) return;
+  const n     = ani * 12;
+  const rata  = suma * dob * Math.pow(1 + dob, n) / (Math.pow(1 + dob, n) - 1);
+  const total = rata * n;
+  const dob_t = total - suma;
+  const mult  = (total / suma).toFixed(1);
+
+  const shockClass = parseFloat(mult) >= 1.5 ? 'shock' : '';
+  showResult('credit', `
+    <div class="result-headline">${fmt(total)} total platit</div>
+    <div class="result-explain">
+      Rata ta lunara este <strong>${fmt(rata)}/luna</strong>.
+      In total vei da bancii <strong>${fmt(total)}</strong> — adica de <strong>${mult}x</strong> pretul initial.
+      Doar in dobanzi platesti <strong>${fmt(dob_t)}</strong>.
+    </div>
+    <div class="result-grid">
+      <div class="result-item">
+        <span class="result-item-val">${fmt(rata)}</span>
+        <span class="result-item-lbl">rata lunara</span>
+      </div>
+      <div class="result-item">
+        <span class="result-item-val">${fmt(dob_t)}</span>
+        <span class="result-item-lbl">dobanzi totale</span>
+      </div>
+      <div class="result-item">
+        <span class="result-item-val">${mult}x</span>
+        <span class="result-item-lbl">fata de pret</span>
+      </div>
+    </div>
+  `, shockClass);
+}
+
+// ── 2. COST OPORTUNITATE ────────────────────────────────────────────────────
+function calcOport() {
+  const suma = val('o-suma');
+  const ani  = val('o-ani');
+  const rate = val('o-tip');
+  if (!suma || !ani) return;
+  const fv   = suma * Math.pow(1 + rate, ani);
+  const gain = fv - suma;
+  const pct  = Math.round((fv / suma - 1) * 100);
+  const tipLabel = document.getElementById('o-tip').selectedOptions[0].text;
+
+  showResult('oport', `
+    <div class="result-headline">${fmt(fv)} ai fi avut</div>
+    <div class="result-explain">
+      Daca investeai <strong>${fmt(suma)}</strong> in <strong>${tipLabel}</strong>
+      pe <strong>${ani} ani</strong>, ai fi avut <strong>${fmt(fv)}</strong>.
+      Asta inseamna un castig de <strong>${fmt(gain)}</strong> — adica <strong>+${pct}%</strong> fata de ce platesti azi.
+      Acesta e costul real al achizitiei tale.
+    </div>
+    <div class="result-grid">
+      <div class="result-item">
+        <span class="result-item-val">${fmt(gain)}</span>
+        <span class="result-item-lbl">castig pierdut</span>
+      </div>
+      <div class="result-item">
+        <span class="result-item-val">+${pct}%</span>
+        <span class="result-item-lbl">randament total</span>
+      </div>
+    </div>
+  `, 'shock');
+}
+
+// ── 3. CARD CREDIT ──────────────────────────────────────────────────────────
+function calcCard() {
+  const sold  = val('k-sold');
+  const dob   = val('k-dob') / 100 / 12;
+  const plata = val('k-plata');
+  if (!sold || !dob || !plata) return;
+
+  if (plata <= sold * dob) {
+    showResult('card', `
+      <div class="result-headline">Nu vei termina niciodata!</div>
+      <div class="result-explain">Plata ta lunara de <strong>${fmt(plata)}</strong> nu acopera nici macar dobanda lunara de <strong>${fmt(sold * dob)}</strong>. Datoria creste in loc sa scada. Mareste plata lunara la minim <strong>${fmt(Math.ceil(sold * dob * 1.1))}</strong>.</div>
+    `, 'shock');
+    return;
+  }
+
+  let sold_r = sold, luni = 0, dob_total = 0;
+  while (sold_r > 0 && luni < 1200) {
+    const dob_luna = sold_r * dob;
+    dob_total += dob_luna;
+    sold_r = sold_r + dob_luna - plata;
+    if (sold_r < 0) sold_r = 0;
+    luni++;
+  }
+  const ani_str = fmtYears(luni / 12);
+
+  showResult('card', `
+    <div class="result-headline">${ani_str} pana termini</div>
+    <div class="result-explain">
+      Cu o plata de <strong>${fmt(plata)}/luna</strong>, scapi de datoria de <strong>${fmt(sold)}</strong> in <strong>${ani_str}</strong>.
+      In dobanzi vei plati extra <strong>${fmt(dob_total)}</strong>.
+      Daca maresti plata la <strong>${fmt(plata * 1.5)}/luna</strong>, termini mult mai repede.
+    </div>
+    <div class="result-grid">
+      <div class="result-item">
+        <span class="result-item-val">${luni} luni</span>
+        <span class="result-item-lbl">durata totala</span>
+      </div>
+      <div class="result-item">
+        <span class="result-item-val">${fmt(dob_total)}</span>
+        <span class="result-item-lbl">dobanzi platite</span>
+      </div>
+      <div class="result-item">
+        <span class="result-item-val">${fmt(sold + dob_total)}</span>
+        <span class="result-item-lbl">total platit</span>
+      </div>
+    </div>
+  `, 'shock');
+}
+
+// ── 4. ECONOMII LUNARE ───────────────────────────────────────────────────────
+function calcEco() {
+  const lunar = val('e-lunar') || 0;
+  const init  = val('e-init') || 0;
+  const ani   = val('e-ani');
+  const rand  = val('e-rand') / 100 / 12;
+  if (!ani || (!lunar && !init)) return;
+
+  const n      = ani * 12;
+  const fv_init = init * Math.pow(1 + rand, n);
+  const fv_lun  = lunar > 0 ? lunar * (Math.pow(1 + rand, n) - 1) / rand : 0;
+  const total   = fv_init + fv_lun;
+  const depus   = init + lunar * n;
+  const castig  = total - depus;
+
+  showResult('eco', `
+    <div class="result-headline">${fmt(total)}</div>
+    <div class="result-explain">
+      Daca pui <strong>${fmt(lunar)}/luna</strong>${init ? ` si incepi cu ${fmt(init)}` : ''} timp de <strong>${ani} ani</strong>,
+      ajungi la <strong>${fmt(total)}</strong>.
+      Tu depui efectiv <strong>${fmt(depus)}</strong> — restul de <strong>${fmt(castig)}</strong> vine din dobanda compusa.
+    </div>
+    <div class="result-grid">
+      <div class="result-item">
+        <span class="result-item-val">${fmt(depus)}</span>
+        <span class="result-item-lbl">bani depusi de tine</span>
+      </div>
+      <div class="result-item">
+        <span class="result-item-val">${fmt(castig)}</span>
+        <span class="result-item-lbl">castig din dobanzi</span>
+      </div>
+    </div>
+  `, 'good');
+}
+
+// ── 5. INFLATIE ──────────────────────────────────────────────────────────────
+function calcInf() {
+  const suma = val('i-suma');
+  const ani  = val('i-ani');
+  const rata = val('i-rata') / 100;
+  if (!suma || !ani || !rata) return;
+
+  const vReal  = suma / Math.pow(1 + rata, ani);
+  const pierd  = suma - vReal;
+  const pctP   = Math.round((pierd / suma) * 100);
+
+  showResult('inf', `
+    <div class="result-headline">${fmt(vReal)} putere de cumparare</div>
+    <div class="result-explain">
+      Cei <strong>${fmt(suma)}</strong> tinuti la saltea vor valora echivalentul a <strong>${fmt(vReal)}</strong> de azi
+      dupa <strong>${ani} ani</strong> de inflatie de ${(rata*100).toFixed(1)}%.
+      Adica ai pierdut <strong>${pctP}% din valoare</strong> fara sa faci nimic.
+    </div>
+    <div class="result-grid">
+      <div class="result-item">
+        <span class="result-item-val">${fmt(pierd)}</span>
+        <span class="result-item-lbl">valoare pierduta</span>
+      </div>
+      <div class="result-item">
+        <span class="result-item-val">${pctP}%</span>
+        <span class="result-item-lbl">depreciere</span>
+      </div>
+    </div>
+  `, 'shock');
+}
+
+// Enter key support
+document.addEventListener('keydown', e => {
+  if (e.key !== 'Enter' || !openPanel) return;
+  const fns = { credit: calcCredit, oport: calcOport, card: calcCard, eco: calcEco, inf: calcInf };
+  if (fns[openPanel]) fns[openPanel]();
+});
+</script>
+</body>
+</html>
