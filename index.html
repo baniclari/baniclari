@@ -435,6 +435,83 @@ nav {
   margin-bottom: 10px;
 }
 
+
+
+
+/* ── SHARE BUTTON ── */
+.share-row {
+  display: flex;
+  gap: 8px;
+  margin-top: 16px;
+  padding-top: 16px;
+  border-top: 1px solid var(--border);
+}
+.share-btn {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--ink2);
+  background: var(--bg);
+  border: 1.5px solid var(--border);
+  border-radius: 8px;
+  padding: 8px 14px;
+  cursor: pointer;
+  transition: border-color .15s, color .15s;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+.share-btn:hover { border-color: var(--blue); color: var(--blue); }
+
+/* ── ADVANCED SECTION ── */
+.advanced-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--muted);
+  cursor: pointer;
+  margin-bottom: 12px;
+  user-select: none;
+  transition: color .15s;
+}
+.advanced-toggle:hover { color: var(--blue); }
+.advanced-toggle .caret {
+  transition: transform .18s;
+  font-size: 10px;
+}
+.advanced-toggle.open .caret { transform: rotate(90deg); }
+.advanced-fields {
+  display: none;
+  padding: 14px;
+  background: var(--white);
+  border: 1.5px dashed var(--border);
+  border-radius: 10px;
+  margin-bottom: 16px;
+}
+.advanced-fields.open { display: flex; flex-wrap: wrap; gap: 14px; }
+.advanced-fields .field { min-width: 130px; }
+.advanced-fields .field label { font-size: 10px; }
+.advanced-note {
+  font-size: 11px;
+  color: var(--muted);
+  margin-top: 4px;
+  line-height: 1.4;
+}
+
+/* ── SEO TEXT ── */
+.seo-text {
+  font-size: 13px;
+  color: var(--muted);
+  line-height: 1.7;
+  margin-top: 10px;
+  padding: 14px 16px;
+  background: var(--white);
+  border-radius: 10px;
+  border: 1.5px solid var(--border);
+}
+.seo-text strong { color: var(--ink2); }
+
 /* ── FOOTER ── */
 footer {
   max-width: 1000px;
@@ -489,6 +566,8 @@ footer {
       <div class="card-desc">Banca iti arata rata lunara. Noi iti aratam cat dai efectiv pana la final — si de cate ori ai platit produsul.</div>
       <div class="card-hook">"Masina costa 45.000 RON. Dar cu creditul ai platit 68.000 RON."</div>
       <button class="open-btn">Calculeaza <span class="arrow">→</span></button>
+    
+      <div class="seo-text">Un <strong>credit ipotecar in Romania</strong> inseamna ca platesti de 2-3 ori valoarea imprumutata. <strong>Calculatorul de credit</strong> iti arata rata lunara exacta si dobanzile totale inainte sa semnezi cu banca. Util pentru credite BCR, BRD, ING, Banca Transilvania sau orice alta banca.</div>
     </div>
 
     <!-- PANEL 1 -->
@@ -519,7 +598,36 @@ footer {
         </div>
         <button class="calc-btn" onclick="event.stopPropagation();calcCredit()">Calculeaza</button>
       </div>
+
+      <div class="advanced-toggle" id="adv-toggle-credit" onclick="event.stopPropagation();toggleAdvanced('credit')">
+        <span class="caret">▶</span> Detalii avansate
+      </div>
+      <div class="advanced-fields" id="adv-credit">
+        <div class="field">
+          <label>Comision analiza/admin. (RON)</label>
+          <input type="number" id="c-comis" placeholder="0" min="0">
+        </div>
+        <div class="field">
+          <label>Asigurare viata (%/an din sold)</label>
+          <input type="number" id="c-asig" placeholder="0" step="0.01" min="0">
+        </div>
+        <div class="field">
+          <label>Costuri notariale (RON)</label>
+          <input type="number" id="c-notar" placeholder="0" min="0">
+        </div>
+        <div class="field">
+          <label>Evaluare imobil (RON)</label>
+          <input type="number" id="c-eval" placeholder="0" min="0">
+        </div>
+        <div class="field">
+          <label>Alte costuri (RON)</label>
+          <input type="number" id="c-alte" placeholder="0" min="0">
+        </div>
+      </div>
       <div class="result-box" id="res-credit"></div>
+      <div class="share-row" id="share-row-credit" style="display:none">
+        <button class="share-btn" id="share-btn-credit" onclick="event.stopPropagation();shareResult('credit', 'Cat platesc total pentru creditul meu')">📤 Distribuie rezultatul</button>
+      </div>
     </div>
 
     <!-- 2. Rambursare anticipata -->
@@ -529,6 +637,8 @@ footer {
       <div class="card-desc">Ai o suma extra si vrei sa platesti anticipat din credit. Afla ce e mai avantajos: rata mai mica sau perioada mai scurta.</div>
       <div class="card-hook">"Cu 20.000 RON platiti anticipat, scurtezi creditul cu 4 ani."</div>
       <button class="open-btn">Calculeaza <span class="arrow">→</span></button>
+    
+      <div class="seo-text"><strong>Rambursarea anticipata partiala</strong> este una dintre cele mai bune decizii financiare pe care le poti lua. In Romania, bancile ofera doua variante: reducerea ratei lunare sau scurtarea perioadei. Afla care dintre ele iti economiseste mai multi bani in functie de situatia ta.</div>
     </div>
 
     <!-- PANEL 2 -->
@@ -562,7 +672,21 @@ footer {
         </div>
         <button class="calc-btn" onclick="event.stopPropagation();calcRamb()">Calculeaza</button>
       </div>
+
+      <div class="advanced-toggle" id="adv-toggle-ramb" onclick="event.stopPropagation();toggleAdvanced('ramb')">
+        <span class="caret">▶</span> Detalii avansate
+      </div>
+      <div class="advanced-fields" id="adv-ramb">
+        <div class="field">
+          <label>Comision rambursare anticipata (%)</label>
+          <input type="number" id="r-comis" placeholder="0" step="0.1" min="0">
+          
+        </div>
+      </div>
       <div class="result-box" id="res-ramb"></div>
+      <div class="share-row" id="share-row-ramb" style="display:none">
+        <button class="share-btn" id="share-btn-ramb" onclick="event.stopPropagation();shareResult('ramb', 'Rambursare anticipata - ce e mai avantajos')">📤 Distribuie rezultatul</button>
+      </div>
     </div>
 
     <!-- 3. Chirie vs Cumparare -->
@@ -572,6 +696,8 @@ footer {
       <div class="card-desc">Merita sa cumperi un apartament sau e mai bine sa stai in chirie si sa investesti diferenta? Afla la cati ani devine cumpararea mai avantajoasa.</div>
       <div class="card-hook">"La preturile actuale, cumpararea devine mai buna dupa 9 ani."</div>
       <button class="open-btn">Calculeaza <span class="arrow">→</span></button>
+    
+      <div class="seo-text">Intrebarea <strong>"sa stau in chirie sau sa imi cumpar o casa"</strong> depinde de pretul apartamentului, dobanda la credit si chiria din zona ta. In Romania, la preturile din 2025, cumpararea devine avantajoasa dupa 7-12 ani in majoritatea oraselor mari. Calculeaza exact pentru situatia ta.</div>
     </div>
 
     <!-- PANEL 3 -->
@@ -609,7 +735,32 @@ footer {
         </div>
         <button class="calc-btn" onclick="event.stopPropagation();calcChirie()">Calculeaza</button>
       </div>
+
+      <div class="advanced-toggle" id="adv-toggle-chirie" onclick="event.stopPropagation();toggleAdvanced('chirie')">
+        <span class="caret">▶</span> Detalii avansate
+      </div>
+      <div class="advanced-fields" id="adv-chirie">
+        <div class="field">
+          <label>Impozit anual pe imobil (%)</label>
+          <input type="number" id="ch-imptax" placeholder="0.1" step="0.01" min="0">
+        </div>
+        <div class="field">
+          <label>Garantie chirie (luni)</label>
+          <input type="number" id="ch-garantie" placeholder="1" min="0" max="6">
+        </div>
+        <div class="field">
+          <label>Alte taxe chirie/luna (RON)</label>
+          <input type="number" id="ch-taxechirie" placeholder="0" min="0">
+        </div>
+        <div class="field">
+          <label>Alte taxe cumparare (RON)</label>
+          <input type="number" id="ch-taxecump" placeholder="0" min="0">
+        </div>
+      </div>
       <div class="result-box" id="res-chirie"></div>
+      <div class="share-row" id="share-row-chirie" style="display:none">
+        <button class="share-btn" id="share-btn-chirie" onclick="event.stopPropagation();shareResult('chirie', 'Chirie sau cumparare - rezultatul meu')">📤 Distribuie rezultatul</button>
+      </div>
     </div>
 
     <!-- 4. Cost oportunitate -->
@@ -619,6 +770,8 @@ footer {
       <div class="card-desc">Daca in loc sa cumperi ceva, investeai banii — cat ai fi avut dupa 10 ani? Asta e costul de oportunitate.</div>
       <div class="card-hook">"Telefonul de 6.000 RON te-a costat 14.200 RON in 10 ani."</div>
       <button class="open-btn">Calculeaza <span class="arrow">→</span></button>
+    
+      <div class="seo-text"><strong>Costul de oportunitate</strong> este banii pe care ii pierzi cand cumperi ceva in loc sa investesti. In Romania poti investi in <strong>titluri de stat</strong> cu randament ~7%/an sau ETF-uri globale. Orice achizitie mare merita calculata si din aceasta perspectiva.</div>
     </div>
 
     <!-- PANEL 4 -->
@@ -654,7 +807,24 @@ footer {
         </div>
         <button class="calc-btn" onclick="event.stopPropagation();calcOport()">Calculeaza</button>
       </div>
+
+      <div class="advanced-toggle" id="adv-toggle-oport" onclick="event.stopPropagation();toggleAdvanced('oport')">
+        <span class="caret">▶</span> Detalii avansate
+      </div>
+      <div class="advanced-fields" id="adv-oport">
+        <div class="field">
+          <label>Impozit pe castig (%)</label>
+          <input type="number" id="o-imp" placeholder="10" step="0.5" min="0">
+        </div>
+        <div class="field">
+          <label>Taxe / comisioane (RON)</label>
+          <input type="number" id="o-taxe" placeholder="0" min="0">
+        </div>
+      </div>
       <div class="result-box" id="res-oport"></div>
+      <div class="share-row" id="share-row-oport" style="display:none">
+        <button class="share-btn" id="share-btn-oport" onclick="event.stopPropagation();shareResult('oport', 'Ce pierd daca nu investesc')">📤 Distribuie rezultatul</button>
+      </div>
     </div>
 
     <!-- 5. Card de credit -->
@@ -664,6 +834,8 @@ footer {
       <div class="card-desc">Platesti minimul pe cardul de credit? Afla peste cati ani termini de platit si cat dai extra in dobanzi.</div>
       <div class="card-hook">"Datoria de 3.000 RON cu plata minima dureaza 6 ani."</div>
       <button class="open-btn">Calculeaza <span class="arrow">→</span></button>
+    
+      <div class="seo-text">Dobanda la <strong>cardurile de credit din Romania</strong> este intre 30-40% pe an — una dintre cele mai mari din Europa. Daca platesti doar minimul, o datorie mica poate dura ani de zile. Calculeaza exact cat te costa si cat de repede poti scapa.</div>
     </div>
 
     <!-- PANEL 5 -->
@@ -694,7 +866,25 @@ footer {
         </div>
         <button class="calc-btn" onclick="event.stopPropagation();calcCard()">Calculeaza</button>
       </div>
+
+      <div class="advanced-toggle" id="adv-toggle-card" onclick="event.stopPropagation();toggleAdvanced('card')">
+        <span class="caret">▶</span> Detalii avansate
+      </div>
+      <div class="advanced-fields" id="adv-card">
+        <div class="field">
+          <label>Comision intarziere (RON)</label>
+          <input type="number" id="k-comis" placeholder="0" min="0">
+        </div>
+        <div class="field">
+          <label>Plata minima legala (% din sold)</label>
+          <input type="number" id="k-minim" placeholder="5" step="0.5" min="0">
+          <div class="advanced-note">Bancile impun de regula minim 3-5% din sold/luna</div>
+        </div>
+      </div>
       <div class="result-box" id="res-card"></div>
+      <div class="share-row" id="share-row-card" style="display:none">
+        <button class="share-btn" id="share-btn-card" onclick="event.stopPropagation();shareResult('card', 'Cat dureaza sa scap de datoria pe card')">📤 Distribuie rezultatul</button>
+      </div>
     </div>
 
     <!-- 6. Economii lunare -->
@@ -704,6 +894,8 @@ footer {
       <div class="card-desc">Puterea dobanzii compuse explicata simplu. Pune o suma mica lunar si vezi cum creste in timp.</div>
       <div class="card-hook">"500 RON/luna timp de 15 ani = 200.000 RON."</div>
       <button class="open-btn">Calculeaza <span class="arrow">→</span></button>
+    
+      <div class="seo-text"><strong>Dobanda compusa</strong> este cel mai puternic instrument financiar. Chiar si 300-500 RON economisiti lunar pot deveni sute de mii de RON in 20-30 de ani. Calculeaza cat ai putea strange pana la pensie sau pentru orice alt obiectiv financiar.</div>
     </div>
 
     <!-- PANEL 6 -->
@@ -738,7 +930,28 @@ footer {
         </div>
         <button class="calc-btn" onclick="event.stopPropagation();calcEco()">Calculeaza</button>
       </div>
+
+      <div class="advanced-toggle" id="adv-toggle-eco" onclick="event.stopPropagation();toggleAdvanced('eco')">
+        <span class="caret">▶</span> Detalii avansate
+      </div>
+      <div class="advanced-fields" id="adv-eco">
+        <div class="field">
+          <label>Impozit pe castig (%)</label>
+          <input type="number" id="e-imp" placeholder="10" step="0.5" min="0">
+        </div>
+        <div class="field">
+          <label>Taxe / comisioane anuale (RON)</label>
+          <input type="number" id="e-taxe" placeholder="0" min="0">
+        </div>
+        <div class="field">
+          <label>Inflatie anuala (%)</label>
+          <input type="number" id="e-inf" placeholder="5.5" step="0.1" min="0">
+        </div>
+      </div>
       <div class="result-box" id="res-eco"></div>
+      <div class="share-row" id="share-row-eco" style="display:none">
+        <button class="share-btn" id="share-btn-eco" onclick="event.stopPropagation();shareResult('eco', 'Cat as avea economisind lunar')">📤 Distribuie rezultatul</button>
+      </div>
     </div>
 
     <!-- 7. Inflatie -->
@@ -748,6 +961,8 @@ footer {
       <div class="card-desc">Banii din cont pierd valoare in timp. Afla cat putere de cumparare ai pierdut daca nu faci nimic cu ei.</div>
       <div class="card-hook">"10.000 RON pastrati la saltea valoreaza 7.400 RON in 10 ani."</div>
       <button class="open-btn">Calculeaza <span class="arrow">→</span></button>
+    
+      <div class="seo-text"><strong>Inflatia in Romania</strong> a fost printre cele mai mari din UE in ultimii ani. Banii tinuti la saltea sau intr-un cont curent isi pierd valoarea an de an. Calculeaza cat din puterea de cumparare pierzi daca nu faci nimic cu economiile tale.</div>
     </div>
 
     <!-- PANEL 7 -->
@@ -778,7 +993,21 @@ footer {
         </div>
         <button class="calc-btn" onclick="event.stopPropagation();calcInf()">Calculeaza</button>
       </div>
+
+      <div class="advanced-toggle" id="adv-toggle-inf" onclick="event.stopPropagation();toggleAdvanced('inf')">
+        <span class="caret">▶</span> Detalii avansate
+      </div>
+      <div class="advanced-fields" id="adv-inf">
+        <div class="field">
+          <label>Impozit pe castig (%)</label>
+          <input type="number" id="i-imp" placeholder="10" step="0.5" min="0">
+          <div class="advanced-note">Daca ai investi suma in loc sa o tii la saltea, castigul ar fi impozitat 10%</div>
+        </div>
+      </div>
       <div class="result-box" id="res-inf"></div>
+      <div class="share-row" id="share-row-inf" style="display:none">
+        <button class="share-btn" id="share-btn-inf" onclick="event.stopPropagation();shareResult('inf', 'Cat valoreaza banii mei in timp')">📤 Distribuie rezultatul</button>
+      </div>
     </div>
 
 
@@ -791,6 +1020,14 @@ footer {
 </footer>
 
 <script>
+
+function toggleAdvanced(id) {
+  const el = document.getElementById('adv-' + id);
+  const btn = document.getElementById('adv-toggle-' + id);
+  el.classList.toggle('open');
+  btn.classList.toggle('open');
+}
+
 // ── helpers ──────────────────────────────────────────────────────────────────
 function val(id) {
   const el = document.getElementById(id);
@@ -798,6 +1035,76 @@ function val(id) {
   const n = parseFloat(v);
   return (!v || isNaN(n) || n === 0) ? parseFloat(el.placeholder) : n;
 }
+
+
+
+async function shareResult(id, title) {
+  const el = document.getElementById('res-' + id);
+  if (!el) return;
+
+  // Extract headline
+  const headlineEl = el.querySelector('.result-headline');
+  const headline = headlineEl ? headlineEl.innerText.trim() : '';
+
+  // Extract explanation, clean up whitespace
+  const explainEl = el.querySelector('.result-explain');
+  let explain = explainEl ? explainEl.innerText.replace(/\s+/g, ' ').trim() : '';
+
+  // Extract grid items as key stats
+  const items = el.querySelectorAll('.result-item');
+  let statsLines = [];
+  items.forEach(item => {
+    const val = item.querySelector('.result-item-val');
+    const lbl = item.querySelector('.result-item-lbl');
+    if (val && lbl) {
+      statsLines.push(`${lbl.innerText.trim()}: ${val.innerText.trim()}`);
+    }
+  });
+
+  let shareText = `💰 BaniClari — ${title}\n\n`;
+  shareText += `${headline}\n`;
+  shareText += `${'─'.repeat(28)}\n\n`;
+  shareText += `${explain}\n`;
+  if (statsLines.length) {
+    shareText += `\n${'─'.repeat(28)}\n`;
+    statsLines.forEach(line => shareText += `• ${line}\n`);
+  }
+  shareText += `\n📊 Calculeaza si tu gratuit:\nbaniclari.ro`;
+
+  if (navigator.share) {
+    try {
+      await navigator.share({ text: shareText });
+    } catch (e) {}
+  } else {
+    try {
+      await navigator.clipboard.writeText(shareText);
+      const btn = document.getElementById('share-btn-' + id);
+      if (btn) {
+        const orig = btn.innerHTML;
+        btn.innerHTML = '✓ Copiat!';
+        setTimeout(() => btn.innerHTML = orig, 1800);
+      }
+    } catch (e) {}
+  }
+}
+
+function isAdvOpen(id) {
+  const el = document.getElementById('adv-' + id);
+  return el && el.classList.contains('open');
+}
+
+function valAdv(id, defaultVal) {
+  const el = document.getElementById(id);
+  if (!el) return defaultVal;
+  const v = el.value.trim();
+  if (v === '') {
+    const ph = el.placeholder;
+    return ph !== '' ? parseFloat(ph) : defaultVal;
+  }
+  const n = parseFloat(v);
+  return isNaN(n) ? defaultVal : n;
+}
+
 function fmt(n) {
   return new Intl.NumberFormat('ro-RO', { maximumFractionDigits: 0 }).format(Math.round(n)) + ' RON';
 }
@@ -834,6 +1141,8 @@ function showResult(id, html, type) {
   const el = document.getElementById('res-' + id);
   el.className = 'result-box show' + (type ? ' ' + type : '');
   el.innerHTML = html;
+  const shareRow = document.getElementById('share-row-' + id);
+  if (shareRow) shareRow.style.display = 'flex';
 }
 
 // ── 1. CREDIT ────────────────────────────────────────────────────────────────
@@ -844,17 +1153,45 @@ function calcCredit() {
   if (!suma || !dob || !ani) return;
   const n     = ani * 12;
   const rata  = suma * dob * Math.pow(1 + dob, n) / (Math.pow(1 + dob, n) - 1);
-  const total = rata * n;
-  const dob_t = total - suma;
+  const totalRate = rata * n;
+  const dob_t = totalRate - suma;
+
+  // Costuri suplimentare - doar daca sectiunea avansata e deschisa
+  const advOpen = isAdvOpen('credit');
+  const comis  = advOpen ? valAdv('c-comis', 0) : 0;
+  const asigPct = advOpen ? valAdv('c-asig', 0) / 100 : 0;
+  const notar  = advOpen ? valAdv('c-notar', 0) : 0;
+  const eval_  = advOpen ? valAdv('c-eval', 0) : 0;
+  const alte   = advOpen ? valAdv('c-alte', 0) : 0;
+
+  // Asigurare de viata: % anual din soldul ramas, aproximat pe sold mediu
+  let asigTotal = 0;
+  if (asigPct > 0) {
+    let sold = suma;
+    for (let an = 0; an < ani; an++) {
+      asigTotal += sold * asigPct;
+      // reducere aproximativa a soldului in acel an
+      sold -= (suma / ani);
+      if (sold < 0) sold = 0;
+    }
+  }
+
+  const costuriExtra = comis + notar + eval_ + alte + asigTotal;
+  const total = totalRate + costuriExtra;
   const mult  = (total / suma).toFixed(1);
 
   const shockClass = parseFloat(mult) >= 1.5 ? 'shock' : '';
+  
+  const extraText = costuriExtra > 0 
+    ? ` La asta se adauga <strong>${fmt(costuriExtra)}</strong> costuri suplimentare (comisioane, asigurare, notariale).`
+    : '';
+
   showResult('credit', `
     <div class="result-headline">${fmt(total)} total platit</div>
     <div class="result-explain">
       Rata ta lunara este <strong>${fmt(rata)}/luna</strong>.
-      In total vei da bancii <strong>${fmt(total)}</strong> — adica de <strong>${mult}x</strong> suma imprumutata.
-      Doar in dobanzi platesti <strong>${fmt(dob_t)}</strong>.
+      In total vei da bancii <strong>${fmt(totalRate)}</strong> — adica de <strong>${(totalRate/suma).toFixed(1)}x</strong> suma imprumutata.
+      Doar in dobanzi platesti <strong>${fmt(dob_t)}</strong>.${extraText}
     </div>
     <div class="result-grid">
       <div class="result-item">
@@ -865,9 +1202,13 @@ function calcCredit() {
         <span class="result-item-val">${fmt(dob_t)}</span>
         <span class="result-item-lbl">dobanzi totale</span>
       </div>
+      ${costuriExtra > 0 ? `<div class="result-item">
+        <span class="result-item-val">${fmt(costuriExtra)}</span>
+        <span class="result-item-lbl">costuri suplimentare</span>
+      </div>` : ''}
       <div class="result-item">
         <span class="result-item-val">${mult}x</span>
-        <span class="result-item-lbl">fata de suma imprumutata</span>
+        <span class="result-item-lbl">cost total / suma imprumutata</span>
       </div>
     </div>
   `, shockClass);
@@ -879,27 +1220,41 @@ function calcOport() {
   const ani  = val('o-ani');
   const rate = val('o-tip');
   if (!suma || !ani) return;
-  const fv   = suma * Math.pow(1 + rate, ani);
-  const gain = fv - suma;
-  const pct  = Math.round((fv / suma - 1) * 100);
+  const advOpen = isAdvOpen('oport');
+  const impPct = advOpen ? valAdv('o-imp', 10) / 100 : 0.10;
+  const taxe   = advOpen ? valAdv('o-taxe', 0) : 0;
+
+  const fv     = suma * Math.pow(1 + rate, ani);
+  const gainBrut = fv - suma;
+  const impozit = gainBrut * impPct;
+  const gain   = gainBrut - impozit - taxe;
+  const fvNet  = suma + gain;
+  const pct    = Math.round((gain / suma) * 100);
   const tipLabel = document.getElementById('o-tip').selectedOptions[0].text;
 
+  const taxeText = taxe > 0 ? ` Scazand si <strong>${fmt(taxe)}</strong> taxe/comisioane,` : '';
+
   showResult('oport', `
-    <div class="result-headline">${fmt(fv)} ai fi avut</div>
+    <div class="result-headline">${fmt(fvNet)} ai fi avut</div>
     <div class="result-explain">
       Daca investeai <strong>${fmt(suma)}</strong> in <strong>${tipLabel}</strong>
-      pe <strong>${ani} ani</strong>, ai fi avut <strong>${fmt(fv)}</strong>.
-      Asta inseamna un castig de <strong>${fmt(gain)}</strong> — adica <strong>+${pct}%</strong> fata de ce platesti azi.
+      pe <strong>${ani} ani</strong>, ai fi avut <strong>${fmt(fv)}</strong> brut.
+      Dupa impozitul de ${(impPct*100).toFixed(0)}% pe castig (${fmt(impozit)}),${taxeText} ramii cu <strong>${fmt(fvNet)}</strong> —
+      un castig net de <strong>${fmt(gain)}</strong> (<strong>+${pct}%</strong>).
       Acesta e costul real al achizitiei tale.
     </div>
     <div class="result-grid">
       <div class="result-item">
         <span class="result-item-val">${fmt(gain)}</span>
-        <span class="result-item-lbl">castig pierdut</span>
+        <span class="result-item-lbl">castig net pierdut</span>
+      </div>
+      <div class="result-item">
+        <span class="result-item-val">${fmt(impozit)}</span>
+        <span class="result-item-lbl">impozit pe castig</span>
       </div>
       <div class="result-item">
         <span class="result-item-val">+${pct}%</span>
-        <span class="result-item-lbl">randament total</span>
+        <span class="result-item-lbl">randament net</span>
       </div>
     </div>
   `, 'shock');
@@ -912,6 +1267,10 @@ function calcCard() {
   const plata = val('k-plata');
   if (!sold || !dob || !plata) return;
 
+  const comisIntarziere = valAdv('k-comis', 0);
+  const minimPct = valAdv('k-minim', 5) / 100;
+  const minimLegal = sold * minimPct;
+
   if (plata <= sold * dob) {
     showResult('card', `
       <div class="result-headline">Nu vei termina niciodata!</div>
@@ -920,7 +1279,7 @@ function calcCard() {
     return;
   }
 
-  let sold_r = sold, luni = 0, dob_total = 0;
+  let sold_r = sold, luni = 0, dob_total = 0, comis_total = 0;
   while (sold_r > 0 && luni < 1200) {
     const dob_luna = sold_r * dob;
     dob_total += dob_luna;
@@ -930,12 +1289,19 @@ function calcCard() {
   }
   const ani_str = fmtYears(luni / 12);
 
+  const minimText = plata < minimLegal
+    ? ` Atentie: plata ta este sub plata minima impusa de banca (${(minimPct*100).toFixed(0)}% din sold = <strong>${fmt(minimLegal)}</strong>); bancile pot solicita o plata mai mare.`
+    : '';
+  const comisText = comisIntarziere > 0
+    ? ` Daca intarzii o plata, se aplica un comision de <strong>${fmt(comisIntarziere)}</strong>.`
+    : '';
+
   showResult('card', `
     <div class="result-headline">${ani_str} pana termini</div>
     <div class="result-explain">
       Cu o plata de <strong>${fmt(plata)}/luna</strong>, scapi de datoria de <strong>${fmt(sold)}</strong> in <strong>${ani_str}</strong>.
       In dobanzi vei plati extra <strong>${fmt(dob_total)}</strong>.
-      Daca maresti plata la <strong>${fmt(plata * 1.5)}/luna</strong>, termini mult mai repede.
+      Daca maresti plata la <strong>${fmt(plata * 1.5)}/luna</strong>, termini mult mai repede.${minimText}${comisText}
     </div>
     <div class="result-grid">
       <div class="result-item">
@@ -950,6 +1316,10 @@ function calcCard() {
         <span class="result-item-val">${fmt(sold + dob_total)}</span>
         <span class="result-item-lbl">total platit</span>
       </div>
+      <div class="result-item">
+        <span class="result-item-val">${fmt(minimLegal)}</span>
+        <span class="result-item-lbl">plata minima banca</span>
+      </div>
     </div>
   `, 'shock');
 }
@@ -961,20 +1331,37 @@ function calcEco() {
   const ani   = val('e-ani');
   const rand  = val('e-rand') / 100 / 12;
   if (!ani || (!lunar && !init)) return;
+  const advOpen = isAdvOpen('eco');
+  const impPct = advOpen ? valAdv('e-imp', 10) / 100 : 0.10;
+  const taxeAnuale = advOpen ? valAdv('e-taxe', 0) : 0;
+  const infPct = advOpen ? valAdv('e-inf', 5.5) / 100 : 0;
 
   const n      = ani * 12;
   const fv_init = init * Math.pow(1 + rand, n);
   const fv_lun  = lunar > 0 ? lunar * (Math.pow(1 + rand, n) - 1) / rand : 0;
-  const total   = fv_init + fv_lun;
+  const totalBrut = fv_init + fv_lun;
   const depus   = init + lunar * n;
-  const castig  = total - depus;
+  const castigBrut = totalBrut - depus;
+  const impozit = castigBrut * impPct;
+  const taxeTotale = taxeAnuale * ani;
+  const castig  = castigBrut - impozit - taxeTotale;
+  const total   = depus + castig;
+
+  // Valoarea reala (ajustata la inflatie)
+  const totalReal = infPct > 0 ? total / Math.pow(1 + infPct, ani) : null;
+
+  const taxeText = taxeTotale > 0 ? ` Scazand si <strong>${fmt(taxeTotale)}</strong> taxe/comisioane pe toata perioada,` : '';
+  const infText = totalReal !== null
+    ? ` Tinand cont de o inflatie de ${(infPct*100).toFixed(1)}%/an, suma de <strong>${fmt(total)}</strong> are puterea de cumparare de azi a <strong>${fmt(totalReal)}</strong>.`
+    : '';
 
   showResult('eco', `
     <div class="result-headline">${fmt(total)}</div>
     <div class="result-explain">
       Daca pui <strong>${fmt(lunar)}/luna</strong>${init ? ` si incepi cu ${fmt(init)}` : ''} timp de <strong>${ani} ani</strong>,
-      ajungi la <strong>${fmt(total)}</strong>.
-      Tu depui efectiv <strong>${fmt(depus)}</strong> — restul de <strong>${fmt(castig)}</strong> vine din dobanda compusa.
+      ajungi la <strong>${fmt(totalBrut)}</strong> brut.
+      Tu depui efectiv <strong>${fmt(depus)}</strong> — castigul brut din dobanda compusa este <strong>${fmt(castigBrut)}</strong>.
+      Dupa impozitul de ${(impPct*100).toFixed(0)}% (${fmt(impozit)}),${taxeText} suma neta finala este <strong>${fmt(total)}</strong>.${infText}
     </div>
     <div class="result-grid">
       <div class="result-item">
@@ -983,8 +1370,16 @@ function calcEco() {
       </div>
       <div class="result-item">
         <span class="result-item-val">${fmt(castig)}</span>
-        <span class="result-item-lbl">castig din dobanzi</span>
+        <span class="result-item-lbl">castig net din dobanzi</span>
       </div>
+      <div class="result-item">
+        <span class="result-item-val">${fmt(impozit)}</span>
+        <span class="result-item-lbl">impozit pe castig</span>
+      </div>
+      ${totalReal !== null ? `<div class="result-item">
+        <span class="result-item-val">${fmt(totalReal)}</span>
+        <span class="result-item-lbl">valoare reala (azi)</span>
+      </div>` : ''}
     </div>
   `, 'good');
 }
@@ -995,10 +1390,17 @@ function calcInf() {
   const ani  = val('i-ani');
   const rata = val('i-rata') / 100;
   if (!suma || !ani || !rata) return;
+  const impPct = valAdv('i-imp', 10) / 100;
 
   const vReal  = suma / Math.pow(1 + rata, ani);
   const pierd  = suma - vReal;
   const pctP   = Math.round((pierd / suma) * 100);
+
+  // Daca ar fi investit la o rata egala cu inflatia, ar ramane doar cu castigul net dupa impozit
+  const fvInvestit = suma * Math.pow(1 + rata, ani);
+  const castigBrut = fvInvestit - suma;
+  const impozit = castigBrut * impPct;
+  const vNetaInvestita = suma + castigBrut - impozit;
 
   showResult('inf', `
     <div class="result-headline">${fmt(vReal)} putere de cumparare</div>
@@ -1006,6 +1408,7 @@ function calcInf() {
       Cei <strong>${fmt(suma)}</strong> tinuti la saltea vor valora echivalentul a <strong>${fmt(vReal)}</strong> de azi
       dupa <strong>${ani} ani</strong> de inflatie de ${(rata*100).toFixed(1)}%.
       Adica ai pierdut <strong>${pctP}% din valoare</strong> fara sa faci nimic.
+      Chiar daca ai fi investit la un randament egal cu inflatia, dupa impozitul de ${(impPct*100).toFixed(0)}% pe castig ai ramane cu <strong>${fmt(vNetaInvestita)}</strong> nominal — sub valoarea initiala in puterea de cumparare.
     </div>
     <div class="result-grid">
       <div class="result-item">
@@ -1015,6 +1418,10 @@ function calcInf() {
       <div class="result-item">
         <span class="result-item-val">${pctP}%</span>
         <span class="result-item-lbl">depreciere</span>
+      </div>
+      <div class="result-item">
+        <span class="result-item-val">${fmt(impozit)}</span>
+        <span class="result-item-lbl">impozit (daca investeai)</span>
       </div>
     </div>
   `, 'shock');
@@ -1029,6 +1436,10 @@ function calcRamb() {
   const suma  = val('r-suma');
   if (!sold || !dob || !luni || !suma || suma >= sold) return;
 
+  const advOpen = isAdvOpen('ramb');
+  const comisPct = advOpen ? valAdv('r-comis', 0) / 100 : 0;
+  const comisRon = suma * comisPct;
+
   // Rata lunara curenta
   const rataAct = sold * dob * Math.pow(1+dob, luni) / (Math.pow(1+dob, luni) - 1);
   const totalAct = rataAct * luni;
@@ -1038,12 +1449,12 @@ function calcRamb() {
   // Varianta 1: rata mai mica, aceeasi perioada
   const rata1 = soldNou * dob * Math.pow(1+dob, luni) / (Math.pow(1+dob, luni) - 1);
   const total1 = rata1 * luni;
-  const economie1 = totalAct - total1;
+  const economie1 = totalAct - total1 - comisRon;
 
   // Varianta 2: aceeasi rata, perioada mai scurta
   const luni2 = Math.ceil(Math.log(rataAct / (rataAct - soldNou * dob)) / Math.log(1 + dob));
   const total2 = rataAct * luni2;
-  const economie2 = totalAct - total2;
+  const economie2 = totalAct - total2 - comisRon;
   const luni_salvate = luni - luni2;
 
   const better = economie2 > economie1 ? 'perioada' : 'rata';
@@ -1051,7 +1462,7 @@ function calcRamb() {
   showResult('ramb', `
     <div class="result-headline">${better === 'perioada' ? 'Mai avantajos: scurtezi perioada' : 'Mai avantajos: reduci rata'}</div>
     <div class="result-explain">
-      Dupa rambursarea de <strong>${fmt(suma)}</strong>, ai doua optiuni:
+      Dupa rambursarea de <strong>${fmt(suma)}</strong>${comisRon > 0 ? ` (comision: ${fmt(comisRon)})` : ''}, ai doua optiuni:
     </div>
     <div class="result-grid" style="margin-top:16px">
       <div class="result-item" style="flex:1;padding:16px;background:${better==='rata'?'var(--green-lt)':'var(--white)'};border-radius:10px;border:1.5px solid ${better==='rata'?'var(--green)':'var(--border)'}">
@@ -1079,24 +1490,37 @@ function calcChirie() {
   const ani    = val('ch-ani');
   if (!pret || !dob || !chirie || !ani) return;
 
+  const advOpen = isAdvOpen('chirie');
+  const impTaxPct  = advOpen ? valAdv('ch-imptax', 0.1) / 100 : 0.001;
+  const garantieLuni = advOpen ? valAdv('ch-garantie', 1) : 1;
+  const taxeChirieLunar = advOpen ? valAdv('ch-taxechirie', 0) : 0;
+  const taxeCumparare = advOpen ? valAdv('ch-taxecump', 0) : 0;
+
   const avans  = pret * avansP;
   const credit = pret - avans;
   const n      = ani * 12;
   const rata   = credit * dob * Math.pow(1+dob, n) / (Math.pow(1+dob, n) - 1);
   
-  // Cost lunar cumparare = rata + intretinere estimata (~0.1%/an din valoare)
+  // Cost lunar cumparare = rata + intretinere estimata + impozit anual imobil/12
   const intretinere = pret * 0.001 / 12;
-  const costLunarCump = rata + intretinere;
+  const impTaxLunar = pret * impTaxPct / 12;
+  const costLunarCump = rata + intretinere + impTaxLunar;
+  
+  // Cost lunar chirie = chirie + alte taxe
+  const costLunarChirie = chirie + taxeChirieLunar;
   
   // Diferenta fata de chirie investita lunar la 7% (titluri de stat)
   const randLunar = 0.07 / 12;
-  const difLunara = Math.max(0, costLunarCump - chirie);
-  const avansInvestit = avans;
+  const difLunara = Math.max(0, costLunarCump - costLunarChirie);
+  
+  // Capitalul initial pentru chirie: avans + garantia + taxele cumparare (ce nu se plateste, se investeste)
+  const garantieRon = chirie * garantieLuni;
+  const avansInvestit = avans + taxeCumparare;
   
   // Calculeaza an cu an breakeven
   let breakeven = null;
   let patrimoniu_chirie = avansInvestit;
-  let patrimoniu_cumparare = avans; // avansul e deja investit in imobil
+  let patrimoniu_cumparare = avans - taxeCumparare; // taxele cumparare sunt cost imediat
   let apreciere_anuala = 0.04; // 4% apreciere imobil/an Romania
   
   for (let luna = 1; luna <= n; luna++) {
@@ -1114,7 +1538,7 @@ function calcChirie() {
     }
   }
 
-  const totalChirie = chirie * n;
+  const totalChirie = costLunarChirie * n;
   const totalCredit = rata * n;
 
   let breakevenText, breakevenClass;
@@ -1126,11 +1550,18 @@ function calcChirie() {
     breakevenClass = 'shock';
   }
 
+  const garantieText = advOpen && garantieLuni > 0
+    ? ` Plus garantia de <strong>${fmt(garantieRon)}</strong> (returnabila la final).`
+    : '';
+  const taxeCumpText = advOpen && taxeCumparare > 0
+    ? ` La cumparare platesti suplimentar <strong>${fmt(taxeCumparare)}</strong> in alte taxe.`
+    : '';
+
   showResult('chirie', `
     <div class="result-headline">${breakeven ? 'Cumpararea devine mai buna dupa ' + breakevenText : 'Chiria e mai avantajoasa pe ' + ani + ' ani'}</div>
     <div class="result-explain">
-      Rata lunara de <strong>${fmt(rata)}</strong> vs chiria de <strong>${fmt(chirie)}</strong>.
-      ${breakeven ? `Dupa <strong>${breakevenText}</strong>, patrimoniul tau ca proprietar depaseste varianta chirie + investitie.` : `Pe orizontul de ${ani} ani, chiria cu investitia diferentei ramane mai avantajoasa financiar.`}
+      Rata lunara de <strong>${fmt(rata)}</strong> vs chiria de <strong>${fmt(costLunarChirie)}</strong>.
+      ${breakeven ? `Dupa <strong>${breakevenText}</strong>, patrimoniul tau ca proprietar depaseste varianta chirie + investitie.` : `Pe orizontul de ${ani} ani, chiria cu investitia diferentei ramane mai avantajoasa financiar.`}${garantieText}${taxeCumpText}
     </div>
     <div class="result-grid">
       <div class="result-item">
